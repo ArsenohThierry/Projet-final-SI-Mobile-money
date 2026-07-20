@@ -119,7 +119,8 @@ INSERT INTO user_operateur (nom, email, password) VALUES
 INSERT INTO prefixe (prefixe, id_operateur) VALUES
 ('033', 1),
 ('034', 2),
-('037', 3);
+('037', 3),
+('038', 2);
 
 INSERT INTO
     client (nom, numero)
