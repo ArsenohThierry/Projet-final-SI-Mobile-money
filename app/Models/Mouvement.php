@@ -4,15 +4,20 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Operateur extends Model
+class Mouvement extends Model
 {
-    protected $table            = 'operateurs';
+    protected $table            = 'mouvement';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = [
+        'id_transaction',
+        'id_client',
+        'sens',
+        'montant'
+    ];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -43,4 +48,32 @@ class Operateur extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function ajouter($idTransaction, $idClient, $sens, $montant) {
+        return $this->insert([
+            'id_transaction' => $idTransaction,
+            'id_client'      => $idClient,
+            'sens'           => $sens,
+            'montant'        => $montant
+        ]);
+    }
+    public function credit($idTransaction,$idClient,$montant)
+    {
+        return $this->insert([
+            'id_transaction'=>$idTransaction,
+            'id_client'=>$idClient,
+            'sens'=>'CREDIT',
+            'montant'=>$montant
+        ]);
+    }
+
+    public function debit($idTransaction,$idClient,$montant)
+    {
+        return $this->insert([
+            'id_transaction'=>$idTransaction,
+            'id_client'=>$idClient,
+            'sens'=>'DEBIT',
+            'montant'=>$montant
+        ]);
+    }
 }
