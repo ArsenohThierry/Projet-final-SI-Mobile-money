@@ -2,11 +2,11 @@
 
 CRUD = CRUD + Liste flitrable
 
-- Login (cote client et operateur):
-    - Si operateur : email et mdp
-    - Si client : par numero 
-        - SI existe : login direct
-        - SI pas encore : Page d'insertion Nom 
+- [ok]Login (cote client et operateur):
+    - [ok]Si operateur : email et mdp
+    - [ok]Si client : par numero 
+        - [ok]SI existe : login direct
+        - [ok]SI pas encore : Page d'insertion Nom 
 - CRUD DES PREFIXES ( 033 , 037)
 - CRUD de types d'operations ( Depot , Retrait , Transfert)
 - CRUD DES FRAIS  : ajouter des frais pour chaque type d'operation
