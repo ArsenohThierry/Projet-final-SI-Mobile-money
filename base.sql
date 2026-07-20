@@ -173,11 +173,6 @@ VALUES
     (3, 500001, 1000000, 2510),
     (3, 1000001, 2000000, 3010);
 
-insert into prefixe (prefixe, id_operateur) values
-('033', 1),
-('034', 2),
-('037', 3);
-
 INSERT INTO client (nom, numero)
 VALUES
 ('Mika', '0371111111'),
