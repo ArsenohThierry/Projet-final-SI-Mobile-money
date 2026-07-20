@@ -9,9 +9,6 @@ class DashboardClientController extends BaseController
 {
     public function index()
     {
-        session()->set([
-            'id_client'=>2
-        ]);
 
         $idClient = session()->get('id_client');
 

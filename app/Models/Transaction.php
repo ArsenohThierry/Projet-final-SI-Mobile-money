@@ -106,7 +106,7 @@ class Transaction extends Model
         );
 
         $db->table('gain')->insert([
-            'id'=>$idTransaction,
+            'id_transaction'=>$idTransaction,
             'montant'=>$frais
         ]);
 
@@ -149,7 +149,7 @@ class Transaction extends Model
         );
 
         $db->table('gain')->insert([
-            'id' => $idTranscation,
+            'id_transaction' => $idTranscation,
             'montant' => $frais
         ]);
 

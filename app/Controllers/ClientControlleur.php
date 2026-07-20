@@ -22,7 +22,7 @@ class ClientControlleur extends BaseController
                 'logged_in'   => true,
             ]);
 
-            return redirect()->to('/client/dashboard');
+            return redirect()->to('/dashboard');
         }
 
         return redirect()->to('/auth/inscription-client?numero=' . $numero);
@@ -52,6 +52,6 @@ class ClientControlleur extends BaseController
             'logged_in'  => true,
         ]);
 
-        return redirect()->to('/client/dashboard');
+        return redirect()->to('/dashboard');
     }
 }
