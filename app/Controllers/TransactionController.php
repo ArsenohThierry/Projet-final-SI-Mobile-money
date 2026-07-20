@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Transaction;
 use App\Models\Client;
+use App\Models\PrefixeModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class TransactionController extends BaseController
@@ -47,6 +48,11 @@ class TransactionController extends BaseController
 
             $numero = $this->request->getPost('numero');
             $montant = $this->request->getPost('montant');
+
+            $prefixeModel = new PrefixeModel();
+            if (!$prefixeModel->estValide($numero)) {
+                return redirect()->back()->with('erreur', 'Numero non Valide');
+            }
 
             $clientModel = new Client();
 

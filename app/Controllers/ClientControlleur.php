@@ -4,12 +4,18 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ClientModel;
+use App\Models\PrefixeModel;
 
 class ClientControlleur extends BaseController
 {
     public function loginClient()
     {
         $numero = $this->request->getPost('numero');
+
+        $prefixeModel = new PrefixeModel();
+        if (!$prefixeModel->estValide($numero)) {
+            return redirect()->to('/auth/login-client')->with('error', 'Numero non Valide');
+        }
 
         $model = new ClientModel();
         $client = $model->findByNumero($numero);
@@ -39,6 +45,11 @@ class ClientControlleur extends BaseController
     {
         $nom    = $this->request->getPost('nom');
         $numero = $this->request->getPost('numero');
+
+        $prefixeModel = new PrefixeModel();
+        if (!$prefixeModel->estValide($numero)) {
+            return redirect()->to('/auth/inscription-client?numero=' . $numero)->with('error', 'Numero non Valide');
+        }
 
         $model = new ClientModel();
         $model->inscrire($nom, $numero);

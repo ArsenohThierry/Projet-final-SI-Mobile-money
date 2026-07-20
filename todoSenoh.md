@@ -13,3 +13,6 @@ CRUD = CRUD + Liste flitrable
 - Dashboard avec un card qui affiche le gain : (total des frais)
 - CRUD des cleints:
     - Detail d'un client quand on clique dessus : (Nom, numero , solde , date creation)
+
+
+# V2

@@ -12,6 +12,10 @@
             <div class="auth-title">Connexion Client</div>
             <div class="auth-subtitle">Entrez votre numéro de téléphone</div>
 
+            <?php if (!empty(session()->getFlashdata('error'))): ?>
+                <div class="alert alert-error"><?= esc(session()->getFlashdata('error')) ?></div>
+            <?php endif; ?>
+
             <form method="POST" action="/auth/login-client">
                 <?= csrf_field() ?>
 

@@ -1,5 +1,6 @@
 # PROJET FINAL SI ETU004031-ETU004273
 
+<<<<<<< Updated upstream
 ## Taches : 
 
 ### Hanaa-4273:
@@ -41,3 +42,11 @@ CRUD = CRUD + Liste flitrable
 - [ok]CRUD des cleints:
     - [ok]Detail d'un client quand on clique dessus : (Nom, numero , solde , date creation)
 - [ok]Ajoute de CSS et design :
+=======
+
+## V1 : 
+### Initialisation du projet : 
+- Création du dépôt github (2 min)
+- Lecture et comprehension du projet ( 20 min)
+- Conception base
+>>>>>>> Stashed changes
