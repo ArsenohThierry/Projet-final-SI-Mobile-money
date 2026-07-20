@@ -1,6 +1,6 @@
-
-
-
+-- =====================================
+-- OPERATEUR MOBILE MONEY
+-- =====================================
 CREATE TABLE
     operateur (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10,9 +10,9 @@ CREATE TABLE
         date_creation DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-
-
-
+-- =====================================
+-- CLIENT
+-- =====================================
 CREATE TABLE
     client (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,34 +21,34 @@ CREATE TABLE
         date_creation DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-
-
-
-
+-- =====================================
+-- PREFIXE TELEPHONE
+-- Exemple : 033, 034, 037
+-- =====================================
 CREATE TABLE
     prefixe (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         prefixe TEXT UNIQUE NOT NULL
     );
 
-
-
-
+-- =====================================
+-- TYPE D'OPERATION
+-- =====================================
 CREATE TABLE
     type_operation (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         libelle TEXT UNIQUE NOT NULL
     );
 
+-- Exemple :
+-- DEPOT
+-- RETRAIT
+-- TRANSFERT
+-- PAIEMENT
 
-
-
-
-
-
-
-
-
+-- =====================================
+-- BAREME DES FRAIS
+-- =====================================
 CREATE TABLE
     bareme_frais (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -59,10 +59,10 @@ CREATE TABLE
         FOREIGN KEY (id_type_operation) REFERENCES type_operation (id)
     );
 
-
-
-
-
+-- =====================================
+-- TRANSACTION
+-- Représente l'action métier
+-- =====================================
 CREATE TABLE
     transaction_mm (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -72,10 +72,10 @@ CREATE TABLE
         FOREIGN KEY (id_type_operation) REFERENCES type_operation(id)
     );
 
-
-
-
-
+-- =====================================
+-- MOUVEMENT FINANCIER
+-- Les impacts sur les comptes clients
+-- =====================================
 CREATE TABLE
     mouvement (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -88,10 +88,10 @@ CREATE TABLE
         FOREIGN KEY (id_client) REFERENCES client (id)
     );
 
-
-
-
-
+-- =====================================
+-- GAIN OPERATEUR
+-- Commission gagnée
+-- =====================================
 CREATE TABLE
     gain (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -109,7 +109,7 @@ INSERT INTO client (nom, numero) VALUES
 ('Jean', '0341234567');
 
 
-
+-- test hanaa
 INSERT INTO client(nom,numero)
 VALUES
 ('Alice','0340000001'),
