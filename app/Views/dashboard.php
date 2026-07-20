@@ -1,42 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Client</title>
+    <title>Dashboard Client — VolaAtHome</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Mobile Money</h1>
+    <!-- Topbar -->
+    <div class="topbar">
+        <a href="/client/dashboard" class="topbar-brand">VolaAtHome</a>
+        <div class="topbar-nav">
+            <span style="color:var(--gray-500);font-size:0.85rem;"><?= esc($client['nom']) ?></span>
+            <a href="/client/logout" class="btn-logout">Déconnexion</a>
+        </div>
+    </div>
 
-    <h3>
-    Client : <?= $client['nom'] ?>
-    </h3>
+    <div class="page">
+        <!-- Solde -->
+        <div class="stats-grid">
+            <div class="card">
+                <div class="card-title">Solde disponible</div>
+                <div class="card-value"><?= number_format($solde, 0, ',', ' ') ?> Ar</div>
+            </div>
+        </div>
 
-    <h2>
-    Solde : <?= $solde ?> Ar
-    </h2>
+        <!-- Actions -->
+        <div class="page-header">
+            <h2>Transactions</h2>
+        </div>
 
+        <div class="actions-grid">
+            <a href="/depot" class="action-card">
+                <div class="action-card-icon">＋</div>
+                <div class="action-card-label">Dépôt</div>
+                <div class="action-card-desc">Créditer votre compte</div>
+            </a>
 
-    <a href="/depot">
-        Faire un dépôt
-    </a>
+            <a href="/retrait" class="action-card">
+                <div class="action-card-icon">－</div>
+                <div class="action-card-label">Retrait</div>
+                <div class="action-card-desc">Retirer des fonds</div>
+            </a>
 
-    <br>
+            <a href="/transfert" class="action-card">
+                <div class="action-card-icon">→</div>
+                <div class="action-card-label">Transfert</div>
+                <div class="action-card-desc">Envoyer de l'argent</div>
+            </a>
 
-    <a href="/retrait">
-        Faire un retrait
-    </a>
-
-    <br>
-
-    <a href="/transfert">
-        Faire un transfert
-    </a>
-
-    <br>
-
-    <a href="/historique">
-        Voir historique
-    </a>
+            <a href="/historique" class="action-card">
+                <div class="action-card-icon">☰</div>
+                <div class="action-card-label">Historique</div>
+                <div class="action-card-desc">Voir les opérations</div>
+            </a>
+        </div>
+    </div>
 </body>
 </html>

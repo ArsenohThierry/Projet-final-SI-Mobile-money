@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Types d'opération — VolaAtHome</title>
+    <title>Clients — VolaAtHome</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -11,8 +11,8 @@
         <a href="/operateur/dashboard" class="topbar-brand">VolaAtHome</a>
         <div class="topbar-nav">
             <a href="/operateur/dashboard">Dashboard</a>
-            <a href="/client">Clients</a>
             <a href="/prefixe">Préfixes</a>
+            <a href="/type-operation">Types</a>
             <a href="/bareme-frais">Barème</a>
             <a href="/operateur/logout" class="btn-logout">Déconnexion</a>
         </div>
@@ -20,8 +20,8 @@
 
     <div class="page">
         <div class="page-header">
-            <h1>Types d'opération</h1>
-            <a href="/type-operation/create" class="btn btn-primary">＋ Ajouter</a>
+            <h1>Clients</h1>
+            <a href="/client/create" class="btn btn-primary">＋ Ajouter</a>
         </div>
 
         <div class="table-wrapper">
@@ -29,18 +29,21 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Libellé</th>
+                        <th>Nom</th>
+                        <th>Numéro</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($types as $t): ?>
+                    <?php foreach ($clients as $c): ?>
                     <tr>
-                        <td><span class="badge badge-outline">#<?= $t->id ?></span></td>
-                        <td style="font-weight:500;"><?= esc($t->libelle) ?></td>
+                        <td><span class="badge badge-outline">#<?= $c['id'] ?></span></td>
+                        <td style="font-weight:500;"><?= esc($c['nom']) ?></td>
+                        <td><?= esc($c['numero']) ?></td>
                         <td class="table-actions">
-                            <a href="/type-operation/edit/<?= $t->id ?>">Modifier</a>
-                            <a href="/type-operation/delete/<?= $t->id ?>" class="delete-link" onclick="return confirm('Supprimer ce type ?')">Supprimer</a>
+                            <a href="/client/detail/<?= $c['id'] ?>">Détail</a>
+                            <a href="/client/edit/<?= $c['id'] ?>">Modifier</a>
+                            <a href="/client/delete/<?= $c['id'] ?>" class="delete-link" onclick="return confirm('Supprimer ce client ?')">Supprimer</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

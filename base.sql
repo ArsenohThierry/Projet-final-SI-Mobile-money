@@ -1,5 +1,5 @@
 -- =====================================
--- OPERATEUR MOBILE MONEY
+-- OPERATEUR VolaAtHome
 -- =====================================
 CREATE TABLE
     operateur (

@@ -3,23 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historique — Mobile Money</title>
+    <title>Détail client — VolaAtHome</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div class="topbar">
-        <a href="/client/dashboard" class="topbar-brand">Mobile Money</a>
+        <a href="/operateur/dashboard" class="topbar-brand">VolaAtHome</a>
         <div class="topbar-nav">
-            <a href="/client/logout" class="btn-logout">Déconnexion</a>
+            <a href="/operateur/logout" class="btn-logout">Déconnexion</a>
         </div>
     </div>
 
     <div class="page">
-        <a href="/client/dashboard" class="back-link">Dashboard</a>
+        <a href="/client" class="back-link">Clients</a>
 
         <div class="page-header">
-            <h1>Historique</h1>
+            <h1><?= esc($client['nom']) ?></h1>
+            <a href="/client/edit/<?= $client['id'] ?>" class="btn btn-outline">Modifier</a>
         </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-item-label">Numéro</div>
+                <div class="info-item-value"><?= esc($client['numero']) ?></div>
+            </div>
+            <div class="info-item">
+                <div class="info-item-label">Solde</div>
+                <div class="info-item-value"><?= number_format($solde, 0, ',', ' ') ?> Ar</div>
+            </div>
+        </div>
+
+        <div class="section-title">Historique des opérations</div>
 
         <div class="table-wrapper">
             <table>
@@ -32,12 +46,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($historique as $h): ?>
+                    <?php foreach ($historique as $h): ?>
                     <tr>
                         <td><?= $h['date_transaction'] ?></td>
-                        <td style="font-weight:500;"><?= $h['libelle'] ?></td>
+                        <td style="font-weight:500;"><?= esc($h['libelle']) ?></td>
                         <td>
-                            <span class="badge <?= ($h['sens'] === 'Crédit' || $h['sens'] === 'credit') ? 'badge-black' : 'badge-outline' ?>">
+                            <span class="badge <?= $h['sens'] === 'Crédit' ? 'badge-black' : 'badge-outline' ?>">
                                 <?= $h['sens'] ?>
                             </span>
                         </td>

@@ -3,35 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un bareme</title>
+    <title>Ajouter un barème — VolaAtHome</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Ajouter un bareme</h1>
+    <div class="topbar">
+        <a href="/operateur/dashboard" class="topbar-brand">VolaAtHome</a>
+        <div class="topbar-nav">
+            <a href="/operateur/logout" class="btn-logout">Déconnexion</a>
+        </div>
+    </div>
 
-    <form method="POST" action="/bareme-frais/store">
-        <?= csrf_field() ?>
+    <div class="page page--narrow">
+        <a href="/bareme-frais" class="back-link">Barème des frais</a>
 
-        <label>Type d'operation :</label><br>
-        <select name="id_type_operation" required>
-            <option value="">-- Choisir --</option>
-            <?php foreach ($types as $t): ?>
-                <option value="<?= $t->id ?>"><?= esc($t->libelle) ?></option>
-            <?php endforeach; ?>
-        </select><br><br>
+        <div class="card">
+            <div class="page-header" style="margin-bottom:1.5rem;">
+                <h1 style="font-size:1.25rem;">Ajouter un barème</h1>
+            </div>
 
-        <label>Montant min :</label><br>
-        <input type="number" step="0.01" name="montant_min" required><br><br>
+            <form method="POST" action="/bareme-frais/store">
+                <?= csrf_field() ?>
 
-        <label>Montant max :</label><br>
-        <input type="number" step="0.01" name="montant_max" required><br><br>
+                <div class="form-group">
+                    <label>Type d'opération</label>
+                    <select name="id_type_operation" required>
+                        <option value="">— Choisir —</option>
+                        <?php foreach ($types as $t): ?>
+                            <option value="<?= $t->id ?>"><?= esc($t->libelle) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-        <label>Frais :</label><br>
-        <input type="number" step="0.01" name="frais" required><br><br>
+                <div class="form-group">
+                    <label>Montant minimum</label>
+                    <input type="number" step="0.01" name="montant_min" required>
+                </div>
 
-        <button type="submit">Ajouter</button>
-    </form>
+                <div class="form-group">
+                    <label>Montant maximum</label>
+                    <input type="number" step="0.01" name="montant_max" required>
+                </div>
 
-    <br>
-    <a href="/bareme-frais">Retour</a>
+                <div class="form-group">
+                    <label>Frais</label>
+                    <input type="number" step="0.01" name="frais" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

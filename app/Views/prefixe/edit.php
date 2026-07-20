@@ -3,20 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier le prefixe</title>
+    <title>Modifier le préfixe — VolaAtHome</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Modifier le prefixe</h1>
+    <div class="topbar">
+        <a href="/operateur/dashboard" class="topbar-brand">VolaAtHome</a>
+        <div class="topbar-nav">
+            <a href="/operateur/logout" class="btn-logout">Déconnexion</a>
+        </div>
+    </div>
 
-    <form method="POST" action="/prefixe/update/<?= $prefixe->id ?>">
-        <?= csrf_field() ?>
-        <label>Prefixe :</label><br>
-        <input type="text" name="prefixe" value="<?= esc($prefixe->prefixe) ?>" required><br><br>
+    <div class="page page--narrow">
+        <a href="/prefixe" class="back-link">Préfixes</a>
 
-        <button type="submit">Modifier</button>
-    </form>
+        <div class="card">
+            <div class="page-header" style="margin-bottom:1.5rem;">
+                <h1 style="font-size:1.25rem;">Modifier le préfixe</h1>
+            </div>
 
-    <br>
-    <a href="/prefixe">Retour</a>
+            <form method="POST" action="/prefixe/update/<?= $prefixe->id ?>">
+                <?= csrf_field() ?>
+
+                <div class="form-group">
+                    <label>Préfixe</label>
+                    <input type="text" name="prefixe" value="<?= esc($prefixe->prefixe) ?>" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Modifier</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

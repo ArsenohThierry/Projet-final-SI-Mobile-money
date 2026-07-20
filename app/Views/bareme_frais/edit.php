@@ -3,34 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier le bareme</title>
+    <title>Modifier le barème — VolaAtHome</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Modifier le bareme</h1>
+    <div class="topbar">
+        <a href="/operateur/dashboard" class="topbar-brand">VolaAtHome</a>
+        <div class="topbar-nav">
+            <a href="/operateur/logout" class="btn-logout">Déconnexion</a>
+        </div>
+    </div>
 
-    <form method="POST" action="/bareme-frais/update/<?= $frais->id ?>">
-        <?= csrf_field() ?>
+    <div class="page page--narrow">
+        <a href="/bareme-frais" class="back-link">Barème des frais</a>
 
-        <label>Type d'operation :</label><br>
-        <select name="id_type_operation" required>
-            <?php foreach ($types as $t): ?>
-                <option value="<?= $t->id ?>" <?= $frais->id_type_operation == $t->id ? 'selected' : '' ?>><?= esc($t->libelle) ?></option>
-            <?php endforeach; ?>
-        </select><br><br>
+        <div class="card">
+            <div class="page-header" style="margin-bottom:1.5rem;">
+                <h1 style="font-size:1.25rem;">Modifier le barème</h1>
+            </div>
 
-        <label>Montant min :</label><br>
-        <input type="number" step="0.01" name="montant_min" value="<?= $frais->montant_min ?>" required><br><br>
+            <form method="POST" action="/bareme-frais/update/<?= $frais->id ?>">
+                <?= csrf_field() ?>
 
-        <label>Montant max :</label><br>
-        <input type="number" step="0.01" name="montant_max" value="<?= $frais->montant_max ?>" required><br><br>
+                <div class="form-group">
+                    <label>Type d'opération</label>
+                    <select name="id_type_operation" required>
+                        <?php foreach ($types as $t): ?>
+                            <option value="<?= $t->id ?>" <?= $frais->id_type_operation == $t->id ? 'selected' : '' ?>><?= esc($t->libelle) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-        <label>Frais :</label><br>
-        <input type="number" step="0.01" name="frais" value="<?= $frais->frais ?>" required><br><br>
+                <div class="form-group">
+                    <label>Montant minimum</label>
+                    <input type="number" step="0.01" name="montant_min" value="<?= $frais->montant_min ?>" required>
+                </div>
 
-        <button type="submit">Modifier</button>
-    </form>
+                <div class="form-group">
+                    <label>Montant maximum</label>
+                    <input type="number" step="0.01" name="montant_max" value="<?= $frais->montant_max ?>" required>
+                </div>
 
-    <br>
-    <a href="/bareme-frais">Retour</a>
+                <div class="form-group">
+                    <label>Frais</label>
+                    <input type="number" step="0.01" name="frais" value="<?= $frais->frais ?>" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Modifier</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

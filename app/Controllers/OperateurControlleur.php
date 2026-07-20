@@ -4,13 +4,23 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\OperateurModel;
+use App\Models\GainModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class OperateurControlleur extends BaseController
 {
     public function dashboard()
     {
-        return view('operateur/dashboard');
+        $model = new GainModel();
+        $totalGains = $model->totalGains();
+
+        return view('operateur/dashboard', ['totalGains' => $totalGains]);
+    }
+
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to('/');
     }
 
     public function loginOperateur()

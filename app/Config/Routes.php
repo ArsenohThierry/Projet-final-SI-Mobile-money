@@ -9,14 +9,17 @@ $routes->get('/', 'AuthController::index');
 $routes->get('/auth/login-operateur', 'AuthController::loginOperateur');
 $routes->post('/auth/login-operateur', 'OperateurControlleur::loginOperateur');
 $routes->get('/operateur/dashboard', 'OperateurControlleur::dashboard');
+$routes->get('/operateur/logout', 'OperateurControlleur::logout');
 $routes->get('/auth/login-client', 'AuthController::loginClient');
 $routes->get('/auth/inscription-client', 'AuthController::inscriptionClient');
 $routes->post('/auth/login-client', 'ClientControlleur::loginClient');
 $routes->post('/client/inscription', 'ClientControlleur::inscription');
 $routes->get('/client/dashboard', 'ClientControlleur::dashboard');
+$routes->get('/client/logout', 'ClientControlleur::logout');
 
 // CRUD Client
 $routes->get('/client', 'ClientController::index');
+$routes->get('/client/detail/(:num)', 'ClientController::detail/$1');
 $routes->get('/client/create', 'ClientController::create');
 $routes->post('/client/store', 'ClientController::store');
 $routes->get('/client/edit/(:num)', 'ClientController::edit/$1');

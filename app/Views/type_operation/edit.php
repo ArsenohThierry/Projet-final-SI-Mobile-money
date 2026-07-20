@@ -4,26 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier le type d'operation</title>
+    <title>Modifier le type — VolaAtHome</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-    <h1>Modifier le type d'operation</h1>
+    <div class="topbar">
+        <a href="/operateur/dashboard" class="topbar-brand">VolaAtHome</a>
+        <div class="topbar-nav">
+            <a href="/operateur/logout" class="btn-logout">Déconnexion</a>
+        </div>
+    </div>
 
-    <form method="POST" action="/type-operation/update/<?= $type->id ?>">
-        <?= csrf_field() ?>
+    <div class="page page--narrow">
+        <a href="/type-operation" class="back-link">Types d'opération</a>
 
-        <label>Id :</label><br>
-        <input type="text" name="id" value="<?= esc($type->id) ?>" required><br><br>
+        <div class="card">
+            <div class="page-header" style="margin-bottom:1.5rem;">
+                <h1 style="font-size:1.25rem;">Modifier le type d'opération</h1>
+            </div>
 
-        <label>Libelle :</label><br>
-        <input type="text" name="libelle" value="<?= esc($type->libelle) ?>" required><br><br>
+            <form method="POST" action="/type-operation/update/<?= $type->id ?>">
+                <?= csrf_field() ?>
 
-        <button type="submit">Modifier</button>
-    </form>
+                <div class="form-group">
+                    <label>Libellé</label>
+                    <input type="text" name="libelle" value="<?= esc($type->libelle) ?>" required>
+                </div>
 
-    <br>
-    <a href="/type-operation">Retour</a>
+                <button type="submit" class="btn btn-primary">Modifier</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un type — VolaAtHome</title>
+    <title>Modifier le client — VolaAtHome</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -15,22 +15,27 @@
     </div>
 
     <div class="page page--narrow">
-        <a href="/type-operation" class="back-link">Types d'opération</a>
+        <a href="/client" class="back-link">Clients</a>
 
         <div class="card">
             <div class="page-header" style="margin-bottom:1.5rem;">
-                <h1 style="font-size:1.25rem;">Ajouter un type d'opération</h1>
+                <h1 style="font-size:1.25rem;">Modifier le client</h1>
             </div>
 
-            <form method="POST" action="/type-operation/store">
+            <form method="POST" action="/client/update/<?= $client['id'] ?>">
                 <?= csrf_field() ?>
 
                 <div class="form-group">
-                    <label>Libellé</label>
-                    <input type="text" name="libelle" placeholder="Ex: Dépôt" required>
+                    <label>Nom</label>
+                    <input type="text" name="nom" value="<?= esc($client['nom']) ?>" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Ajouter</button>
+                <div class="form-group">
+                    <label>Numéro</label>
+                    <input type="text" name="numero" value="<?= esc($client['numero']) ?>" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Modifier</button>
             </form>
         </div>
     </div>
