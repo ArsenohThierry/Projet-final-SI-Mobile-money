@@ -1,0 +1,4 @@
+- on ne peut se logger qu'avec un num avec les prefixes definis par l'operateur
+- lors d'un transfert, si le num est du mm operateur, l'existance de  celui ci sera verife dans la base (erreur si n'existe pas) sinon, si u num d'un autre operateur, pas besoin de verifeir dans la base ()
+- lors d'un transfert, si num d'autre operateur, verouiller l'option "prendre en charge le frais de retrait"
+- 
