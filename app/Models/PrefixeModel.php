@@ -10,4 +10,17 @@ class PrefixeModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = ['prefixe'];
     protected $returnType = 'object';
+
+    public function estValide(string $numero): bool
+    {
+        $prefixes = $this->findAll();
+
+        foreach ($prefixes as $p) {
+            if (str_starts_with($numero, $p->prefixe)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

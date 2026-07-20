@@ -62,4 +62,25 @@ class Client extends Model
     public function getByNumero($numero) {
         return $this->where('numero', $numero)->first();
     }
+
+    public function getOperateur($numero) {
+        $prefixe = substr($numero, 0, 3);
+
+        return db_connect()
+            ->table('prefixe')
+            ->where('prefixe', $prefixe)
+            ->get()
+            ->getRowArray();
+    }
+
+    public function memeOPerateur($num1, $num2) {
+        $op1 = $this->getOperateur($num1);
+        $op2 = $this->getOperateur($num2);
+
+        if (!$op1 || !$op2) {
+            return false;
+        }
+
+        return $op1['id'] === $op2['id'];
+    }
 }

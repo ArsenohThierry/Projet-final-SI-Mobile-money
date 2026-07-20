@@ -1,5 +1,6 @@
 # Taches :
 
+## V1 :
 CRUD = CRUD + Liste flitrable
 
 - [ok]Login (cote client et operateur):
@@ -13,3 +14,16 @@ CRUD = CRUD + Liste flitrable
 - Dashboard avec un card qui affiche le gain : (total des frais)
 - CRUD des cleints:
     - Detail d'un client quand on clique dessus : (Nom, numero , solde , date creation)
+
+
+## V2 :
+
+- Configuration des prefixes , on ne peut pas s'inscrire si le prefixe du numero n'est pas celui de l'operateur
+
+- ajout table operateur:
+- CRUD des operateurs 
+- Modifier CRUD des prefixes : 
+        - nom_operateur , % comission 
+    - Dans la page CRUD de prefixe :
+        - + Select operateur 
+    - Dans la liste des prefixes , filtre par operateur 
