@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class OperateurModel extends Model
 {
-    protected $table = 'operateur';
+    protected $table = 'user_operateur';
     protected $primaryKey = 'id';
     protected $allowedFields = ['nom', 'email', 'password'];
     protected $returnType = 'object';

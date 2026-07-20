@@ -20,9 +20,10 @@ CRUD = CRUD + Liste flitrable
 
 - Configuration des prefixes , on ne peut pas s'inscrire si le prefixe du numero n'est pas celui de l'operateur
 
+- ajout table operateur:
+- CRUD des operateurs 
 - Modifier CRUD des prefixes : 
-    - Modifier table prefixe : 
-        - ajouter nom_operateur , % comission ,
-    - Dans la page CRUD :
-        - Bouton ajouter d'autres operateurs :
-            - prefixe , comission
+        - nom_operateur , % comission 
+    - Dans la page CRUD de prefixe :
+        - + Select operateur 
+    - Dans la liste des prefixes , filtre par operateur 

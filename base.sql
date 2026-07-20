@@ -34,7 +34,9 @@ CREATE TABLE
 CREATE TABLE
     prefixe (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        prefixe TEXT UNIQUE NOT NULL
+        prefixe TEXT UNIQUE NOT NULL,
+        id_operateur INTEGER NOT NULL,
+        FOREIGN KEY (id_operateur) REFERENCES operateur(id)
     );
 
 -- =====================================
