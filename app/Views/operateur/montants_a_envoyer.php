@@ -45,14 +45,15 @@
         <h2>Détails</h2>
         <form method="GET" action="/operateur/montants-a-envoyer">
             <label>Opérateur :</label>
-            <select name="id_operateur">
+            <select name="id_operateur" style="width:30%">
                 <option value="">Tous</option>
                 <?php foreach ($operateurs as $o): ?>
                     <option value="<?= $o->id ?>" <?= $filters['id_operateur'] == $o->id ? 'selected' : '' ?>><?= esc($o->nom) ?></option>
                 <?php endforeach; ?>
             </select>
-            <button type="submit" class="btn btn-primary">Filtrer</button>
-            <a href="/operateur/montants-a-envoyer">Réinitialiser</a>
+            <br>
+            <button style="margin-top: 20px" type="submit" class="btn btn-primary">Filtrer</button>
+            <a href="/operateur/montants-a-envoyer" style="margin-left:10px">Réinitialiser</a>
         </form>
 
         <!-- Liste détaillée -->
