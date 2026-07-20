@@ -36,3 +36,10 @@ $routes->get('/bareme-frais/edit/(:num)', 'BaremeFraisController::edit/$1');
 $routes->post('/bareme-frais/update/(:num)', 'BaremeFraisController::update/$1');
 $routes->get('/bareme-frais/delete/(:num)', 'BaremeFraisController::delete/$1');
 
+$routes->get('/client', 'ClientController::index');
+$routes->get('/client/create', 'ClientController::create');
+$routes->post('/client/store', 'ClientController::store');
+$routes->get('/client/edit/(:num)', 'ClientController::edit/$1');
+$routes->post('/client/update/(:num)', 'ClientController::update/$1');
+$routes->get('/client/delete/(:num)', 'ClientController::delete/$1');
+
