@@ -82,4 +82,13 @@ $routes->group('', ['filter' => 'client'], function ($routes) {
     $routes->get('/transfert', 'TransactionController::transfert');
     $routes->post('/transfert', 'TransactionController::transfert');
     $routes->get('/client/logout', 'ClientControlleur::logout');
+    $routes->post(
+        'client/verifier-operateur',
+        'TransactionController::verifierOperateur'
+    );
+
+    $routes->post(
+        'client/calculer-frais',
+        'TransactionController::calculerFrais'
+    );
 });

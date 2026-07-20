@@ -115,42 +115,132 @@ class Transaction extends Model
         return $db->transStatus();
     }
 
-    public function transfert($expediteur, $destinataire, $montant) {
+    // public function transfert($expediteur, $destinataire, $montant) {
+    //     $client = new Client();
+    //     $bareme = new BaremeFrais();
+    //     $mouvement = new Mouvement();
+
+    //     $frais = $bareme->calculerFrais(3, $montant);
+
+    //     $total = $montant + $frais;
+
+    //     if ($client->getSolde($expediteur) < $total) {
+    //         return false;
+    //     }
+
+    //     $db = db_connect();
+    //     $db->transStart();
+
+    //     $idTranscation = $this->insert([
+    //         'id_type_operation' => 3,
+    //         'montant' => $montant
+    //     ]);
+
+    //     $mouvement->debit(
+    //         $idTranscation,
+    //         $expediteur,
+    //         $total
+    //     );
+
+    //     $mouvement->credit(
+    //         $idTranscation,
+    //         $destinataire,
+    //         $montant
+    //     );
+
+    //     $db->table('gain')->insert([
+    //         'id_transaction' => $idTranscation,
+    //         'montant' => $frais
+    //     ]);
+
+    //     $db->transComplete();
+
+    //     return $db->transStatus();
+    // }
+
+    public function transfert(int $idExpediteur, array $idDestinataires, float $montant, bool $priseEnChargeRetrait = false) {
         $client = new Client();
         $bareme = new BaremeFrais();
         $mouvement = new Mouvement();
 
-        $frais = $bareme->calculerFrais(3, $montant);
+        if (count($idDestinataires) == 0) {
+            return false;
+        }
 
-        $total = $montant + $frais;
+        $numeroExpediteur = $client->find($idExpediteur)['numero'];
 
-        if ($client->getSolde($expediteur) < $total) {
+        foreach ($idDestinataires as $idDestinataire) {
+
+            $dest = $client->find($idDestinataire);
+
+            if (!$dest) {
+                return false;
+            }
+
+            $memeOperateur = $client->memeOperateur(
+                $numeroExpediteur,
+                $dest['numero']
+            );
+
+            // transfert multiple autorisé qu'entre clients du même opérateur
+            $transfertMultiple = count($idDestinataires) > 1;
+            if($transfertMultiple && !$memeOperateur) {
+                return false;
+            }
+
+            // impossible de prendre en charge les frais si opérateurs différents
+            if ($priseEnChargeRetrait && !$memeOperateur) {
+                return false;
+            }
+        }
+
+        $nbDestinataires = count($idDestinataires);
+        $part = $montant / $nbDestinataires;
+
+        $fraisTransfert = $bareme->calculerFrais(3, $montant);
+
+        $fraisRetrait = 0;
+
+        if ($priseEnChargeRetrait) {
+            $fraisRetrait = $bareme->calculerFrais(2, $part);
+        }
+
+        $totalDebit = $montant + $fraisTransfert + ($fraisRetrait * $nbDestinataires);
+
+        if ($client->getSolde($idExpediteur) < $totalDebit) {
             return false;
         }
 
         $db = db_connect();
         $db->transStart();
 
-        $idTranscation = $this->insert([
+        $this->insert([
             'id_type_operation' => 3,
             'montant' => $montant
         ]);
 
+        $idTransaction = $this->insertID();
+
         $mouvement->debit(
-            $idTranscation,
-            $expediteur,
-            $total
+            $idTransaction,
+            $idExpediteur,
+            $totalDebit,
+            $fraisTransfert
         );
 
-        $mouvement->credit(
-            $idTranscation,
-            $destinataire,
-            $montant
-        );
+        foreach ($idDestinataires as $idDestinataire) {
+
+            $mouvement->credit(
+                $idTransaction,
+                $idDestinataire,
+                $part,
+                $priseEnChargeRetrait ? $fraisRetrait : 0
+            );
+        }
 
         $db->table('gain')->insert([
-            'id_transaction' => $idTranscation,
-            'montant' => $frais
+            'id_transaction' => $idTransaction,
+            'montant' => $fraisTransfert
         ]);
 
         $db->transComplete();

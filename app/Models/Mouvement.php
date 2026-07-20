@@ -59,23 +59,25 @@ class Mouvement extends Model
             'montant'        => $montant
         ]);
     }
-    public function credit($idTransaction,$idClient,$montant)
+    public function credit($idTransaction,$idClient,$montant, $frais = 0)
     {
         return $this->insert([
             'id_transaction'=>$idTransaction,
             'id_client'=>$idClient,
             'sens'=>'CREDIT',
-            'montant'=>$montant
+            'montant'=>$montant,
+            'frais'=>$frais
         ]);
     }
 
-    public function debit($idTransaction,$idClient,$montant)
+    public function debit($idTransaction,$idClient,$montant, $frais = 0)
     {
         return $this->insert([
             'id_transaction'=>$idTransaction,
             'id_client'=>$idClient,
             'sens'=>'DEBIT',
-            'montant'=>$montant
+            'montant'=>$montant,
+            'frais'=>$frais
         ]);
     }
 
