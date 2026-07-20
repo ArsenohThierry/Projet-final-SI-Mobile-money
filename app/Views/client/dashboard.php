@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="topbar">
-        <a href="/client/dashboard" class="topbar-brand">Mobile Money</a>
+        <a href="/dashboard" class="topbar-brand">Mobile Money</a>
         <div class="topbar-nav">
             <a href="/client/logout" class="btn-logout">Déconnexion</a>
         </div>

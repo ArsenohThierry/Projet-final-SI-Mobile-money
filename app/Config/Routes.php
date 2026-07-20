@@ -24,6 +24,7 @@ $routes->group('', ['filter' => 'operateur'], function ($routes) {
 
     $routes->get('/operateur/dashboard', 'OperateurControlleur::dashboard');
     $routes->get('/operateur/logout', 'OperateurControlleur::logout');
+    $routes->get('/operateur/montants-a-envoyer', 'OperateurControlleur::montantsAEnvoyer');
 
     // CRUD Client
     $routes->get('/client', 'ClientController::index');
@@ -33,6 +34,14 @@ $routes->group('', ['filter' => 'operateur'], function ($routes) {
     $routes->get('/client/edit/(:num)', 'ClientController::edit/$1');
     $routes->post('/client/update/(:num)', 'ClientController::update/$1');
     $routes->get('/client/delete/(:num)', 'ClientController::delete/$1');
+
+    // CRUD Operateurs
+    $routes->get('/operateur-crud', 'OperateurController::index');
+    $routes->get('/operateur-crud/create', 'OperateurController::create');
+    $routes->post('/operateur-crud/store', 'OperateurController::store');
+    $routes->get('/operateur-crud/edit/(:num)', 'OperateurController::edit/$1');
+    $routes->post('/operateur-crud/update/(:num)', 'OperateurController::update/$1');
+    $routes->get('/operateur-crud/delete/(:num)', 'OperateurController::delete/$1');
 
     // CRUD Prefixe
     $routes->get('/prefixe', 'PrefixeController::index');

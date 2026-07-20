@@ -26,18 +26,15 @@
             </div>
         <?php endif; ?>
 
-
         <div class="card">
 
             <div class="page-header" style="margin-bottom:1.5rem;">
                 <h1 style="font-size:1.25rem;">→ Transfert</h1>
             </div>
 
-
             <form method="post">
 
                 <?= csrf_field() ?>
-
 
                 <div class="form-group">
                     <label>
@@ -51,11 +48,9 @@
                         required></textarea>
 
                     <small>
-                        Plusieurs numéros = transfert multiple
+                        Plusieurs numéros = transfert multiple (même opérateur uniquement)
                     </small>
                 </div>
-
-
 
                 <div class="form-group">
                     <label>Montant total</label>
@@ -69,10 +64,7 @@
                         required>
                 </div>
 
-
-
                 <div class="form-group">
-
                     <label>
                         Frais transfert
                     </label>
@@ -84,11 +76,7 @@
                         value="0">
                 </div>
 
-
-
-
                 <div class="form-group">
-
                     <label>
                         <input
                             type="checkbox"
@@ -101,10 +89,7 @@
                     </label>
 
                     <small id="message-operateur"></small>
-
                 </div>
-
-
 
                 <button
                     type="submit"
@@ -114,7 +99,6 @@
                     Transférer
 
                 </button>
-
 
             </form>
 
@@ -133,121 +117,78 @@
     const message =
     document.getElementById('message-operateur');
 
-
-
     numero.addEventListener('change', verifierOperateur);
 
-
-
     async function verifierOperateur(){
-
 
         let lignes =
             numero.value.trim().split("\n");
 
-
-        // seulement pour transfert simple
         if(lignes.length > 1){
-
             checkbox.disabled = true;
             checkbox.checked = false;
-
             message.innerHTML =
             "Transfert multiple : opérateurs identiques obligatoires";
-
             return;
         }
-
-
 
         let response =
         await fetch(
             "<?= base_url('client/verifier-operateur') ?>",
             {
                 method:"POST",
-
                 headers:{
                     "Content-Type":
                     "application/x-www-form-urlencoded"
                 },
-
                 body:
                 "numero="+numero.value
             }
         );
 
-
         let data =
         await response.json();
 
-
-
         if(data.memeOperateur){
-
             checkbox.disabled=false;
-
             message.innerHTML =
-            "Même opérateur";
-
+            "Même opérateur — frais de retrait optionnels";
         }
         else{
-
             checkbox.disabled=true;
             checkbox.checked=false;
-
             message.innerHTML =
-            "Opérateurs différents";
-
+            "Opérateurs différents — transfert simple uniquement, pas de frais de retrait";
         }
-
     }
 
-
-
-
-
-    montant.addEventListener(
-    'input',
-    calculerFrais
-    );
-
-
+    montant.addEventListener('input', calculerFrais);
 
     async function calculerFrais(){
 
-
         if(!montant.value)
             return;
-
 
         let response =
         await fetch(
             "<?= base_url('client/calculer-frais') ?>",
             {
-
             method:"POST",
-
             headers:{
                 "Content-Type":
                 "application/x-www-form-urlencoded"
             },
-
             body:
             "montant="+montant.value
-
             }
         );
-
 
         let data =
         await response.json();
 
-
         document.getElementById('frais').value =
             data.frais;
-
     }
-
 
     </script>
     

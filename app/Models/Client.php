@@ -73,7 +73,7 @@ class Client extends Model
             ->getRowArray();
     }
 
-    public function memeOPerateur($num1, $num2) {
+    public function memeOperateur($num1, $num2) {
         $op1 = $this->getOperateur($num1);
         $op2 = $this->getOperateur($num2);
 
@@ -81,6 +81,6 @@ class Client extends Model
             return false;
         }
 
-        return $op1['id'] === $op2['id'];
+        return $op1['id_operateur'] === $op2['id_operateur'];
     }
 }

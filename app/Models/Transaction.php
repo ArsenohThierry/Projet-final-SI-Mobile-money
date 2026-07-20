@@ -248,26 +248,74 @@ class Transaction extends Model
         return $db->transStatus();
     }
 
+    public function transfertAutreOperateur($expediteur, $numeroDestinataire, $montant) {
+        $client = new Client();
+        $bareme = new BaremeFrais();
+        $mouvement = new Mouvement();
+        $prefixeModel = new PrefixeModel();
+        $operateurModel = new Operateur();
+
+        $frais = $bareme->calculerFrais(3, $montant);
+
+        $idOperateurDest = $prefixeModel->getOperateurByNumero($numeroDestinataire);
+        $operateur = $operateurModel->find($idOperateurDest);
+        $pctCommission = $operateur->pct_comission;
+        $commission = $montant * ($pctCommission / 100);
+
+        $total = $montant + $frais + $commission;
+
+        if ($client->getSolde($expediteur) < $total) {
+            return false;
+        }
+
+        $db = db_connect();
+        $db->transStart();
+
+        $idTransaction = $this->insert([
+            'id_type_operation' => 3,
+            'montant' => $montant
+        ]);
+
+        $mouvement->debit($idTransaction, $expediteur, $total);
+
+        $mouvement->creditParNumero($idTransaction, $numeroDestinataire, $montant);
+
+        $db->table('gain')->insert([
+            'id_transaction' => $idTransaction,
+            'montant' => $frais
+        ]);
+
+        $db->transComplete();
+
+        return $db->transStatus();
+    }
+
     public function historique($idClient)
     {
-        return $this
+        $db = db_connect();
+        return $db->table('mouvement m')
             ->select('
-                transaction_mm.*,
-                type_operation.libelle,
-                mouvement.sens,
-                mouvement.montant montant_mouvement
+                t.date_transaction,
+                t.montant montant_transaction,
+                ty.libelle,
+                m.sens,
+                m.montant montant_mouvement,
+                cm.numero numero_counterpart,
+                cm.sens sens_counterpart,
+                cc.numero numero_counterpart_client,
+                cc.nom nom_counterpart_client,
+                o.pct_comission
             ')
-            ->join(
-                'mouvement',
-                'mouvement.id_transaction = transaction_mm.id'
-            )
-            ->join(
-                'type_operation',
-                'type_operation.id = transaction_mm.id_type_operation'
-            )
-            ->where('mouvement.id_client',$idClient)
-            ->orderBy('date_transaction','DESC')
-            ->findAll();
+            ->join('transaction_mm t', 't.id = m.id_transaction')
+            ->join('type_operation ty', 'ty.id = t.id_type_operation')
+            ->join('mouvement cm', 'cm.id_transaction = m.id_transaction AND cm.id != m.id')
+            ->join('client cc', 'cc.id = cm.id_client', 'left')
+            ->join('prefixe pf', 'SUBSTR(cm.numero, 1, 3) = pf.prefixe', 'left')
+            ->join('operateur o', 'o.id = pf.id_operateur', 'left')
+            ->where('m.id_client', $idClient)
+            ->orderBy('t.date_transaction', 'DESC')
+            ->get()
+            ->getResultArray();
     }
 
 }

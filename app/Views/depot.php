@@ -8,14 +8,14 @@
 </head>
 <body>
     <div class="topbar">
-        <a href="/client/dashboard" class="topbar-brand">VolaAtHome</a>
+        <a href="/dashboard" class="topbar-brand">VolaAtHome</a>
         <div class="topbar-nav">
             <a href="/client/logout" class="btn-logout">Déconnexion</a>
         </div>
     </div>
 
     <div class="page page--narrow">
-        <a href="/client/dashboard" class="back-link">Dashboard</a>
+        <a href="/dashboard" class="back-link">Dashboard</a>
 
         <div class="card">
             <div class="page-header" style="margin-bottom:1.5rem;">
