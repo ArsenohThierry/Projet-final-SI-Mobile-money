@@ -49,29 +49,43 @@ class TransactionController extends BaseController
             $numero = $this->request->getPost('numero');
             $montant = $this->request->getPost('montant');
 
+            $clientModel = new Client();
             $prefixeModel = new PrefixeModel();
-            if (!$prefixeModel->estValide($numero)) {
+
+            $idClient = session()->get('id_client');
+            $sender = $clientModel->find($idClient);
+            $senderOperateur = $prefixeModel->getOperateurByNumero($sender['numero']);
+            $recipientOperateur = $prefixeModel->getOperateurByNumero($numero);
+
+            if ($recipientOperateur === null) {
                 return redirect()->back()->with('erreur', 'Numero non Valide');
             }
 
-            $clientModel = new Client();
+            if ($senderOperateur === $recipientOperateur) {
+                $destinataire = $clientModel->getByNumero($numero);
 
-            $destinataire = $clientModel->getByNumero($numero);
+                if (!$destinataire) {
+                    return redirect()->back()->with('erreur', 'Client introuvable');
+                }
 
-            if (!$destinataire) {
-                return redirect()->back()->with('erreur', 'Client introuvable');
-            }
+                $transaction = new Transaction();
 
-            $transaction = new Transaction();
-
-            if (
-                !$transaction->transfert(
-                    session()->get('id_client'),
-                    $destinataire['id'],
-                    $montant
-                )
-            ) {
-                return redirect()->back()->with('erreur', 'Solde insuffisant');
+                if (
+                    !$transaction->transfert(
+                        $idClient,
+                        $destinataire['id'],
+                        $montant
+                    )
+                ) {
+                    return redirect()->back()->with('erreur', 'Solde insuffisant');
+                }
+            } else {
+                $transaction = new Transaction();
+                if (
+                    !$transaction->transfertAutreOperateur($idClient, $numero, $montant)
+                ) {
+                    return redirect()->back()->with('erreur', 'Solde insuffisant');
+                }
             }
 
             return redirect()->to('/dashboard');

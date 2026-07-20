@@ -15,8 +15,10 @@ class Mouvement extends Model
     protected $allowedFields    = [
         'id_transaction',
         'id_client',
+        'numero',
         'sens',
-        'montant'
+        'montant',
+        'frais'
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -74,6 +76,16 @@ class Mouvement extends Model
             'id_client'=>$idClient,
             'sens'=>'DEBIT',
             'montant'=>$montant
+        ]);
+    }
+
+    public function creditParNumero($idTransaction, $numero, $montant)
+    {
+        return $this->insert([
+            'id_transaction' => $idTransaction,
+            'numero'         => $numero,
+            'sens'           => 'CREDIT',
+            'montant'        => $montant
         ]);
     }
 }

@@ -20,10 +20,23 @@ CRUD = CRUD + Liste flitrable
 
 - Configuration des prefixes , on ne peut pas s'inscrire si le prefixe du numero n'est pas celui de l'operateur
 
-- ajout table operateur:
-- CRUD des operateurs 
-- Modifier CRUD des prefixes : 
-        - nom_operateur , % comission 
-    - Dans la page CRUD de prefixe :
-        - + Select operateur 
-    - Dans la liste des prefixes , filtre par operateur 
+- [ok]ajout table operateur:
+- [ok]CRUD des operateurs 
+- [ok]Modifier CRUD des prefixes : 
+        [ok]- nom_operateur , % comission 
+    - [ok]Dans la page CRUD de prefixe :
+        - [ok]+ Select operateur 
+    - [ok]Dans la liste des prefixes , filtre par operateur 
+
+- Lors du transfert :
+    - Si le numero a envoyer est du meme operateur , on peut inclure les frais de retrait du destinataire 
+        - Mais on doit verifier si ce numero existe
+    - Si le numero n'est pas celui de l'operateur , et est compris dans les prefixes des autres operateurs , pas besoin de verifier si le numero existe , juste verifier si le prefixe est valide
+        - logique si autre operateur : Lors de l'envoi :
+            - get le prefixe , 
+            - get la comission % selon le prefixe ,
+            - inserer dans mouvement l'id client (mouvement 1) debit
+            - inserer dans mouvement le numero (mouvement 2) Credit, ( ca ne va dans aucun compte car c'est un numero d'autre operateur)
+
+- Page  des montants a envoyer aux autres operateurs ( chaque operateur)
+    - Liste des montants a envoyer filtres par operateurs 

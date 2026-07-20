@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un prefixe</title>
+    <title>Ajouter un operateur</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -15,29 +15,24 @@
     </div>
 
     <div class="page page--narrow">
-        <a href="/prefixe" class="back-link">Prefixes</a>
+        <a href="/operateur-crud" class="back-link">Operateurs</a>
 
         <div class="card">
             <div class="page-header" style="margin-bottom:1.5rem;">
-                <h1 style="font-size:1.25rem;">Ajouter un prefixe</h1>
+                <h1 style="font-size:1.25rem;">Ajouter un operateur</h1>
             </div>
 
-            <form method="POST" action="/prefixe/store">
+            <form method="POST" action="/operateur-crud/store">
                 <?= csrf_field() ?>
 
                 <div class="form-group">
-                    <label>Prefixe</label>
-                    <input type="text" name="prefixe" placeholder="Ex: 033" required>
+                    <label>Nom</label>
+                    <input type="text" name="nom" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Operateur</label>
-                    <select name="id_operateur" required>
-                        <option value="">-- Choisir --</option>
-                        <?php foreach ($operateurs as $o): ?>
-                            <option value="<?= $o->id ?>"><?= esc($o->nom) ?></option>
-                        <?php endforeach; ?>
-                    </select>
+                    <label>% Commission</label>
+                    <input type="number" step="0.01" name="pct_comission" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="width:100%;">Ajouter</button>
