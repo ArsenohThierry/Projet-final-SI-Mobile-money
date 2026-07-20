@@ -31,6 +31,10 @@
                 <div class="info-item-label">Solde</div>
                 <div class="info-item-value"><?= number_format($solde, 0, ',', ' ') ?> Ar</div>
             </div>
+            <div class="info-item">
+                <div class="info-item-label">Date de création</div>
+                <div class="info-item-value"><?= $client['date_creation'] ?></div>
+            </div>
         </div>
 
         <div class="section-title">Historique des opérations</div>
