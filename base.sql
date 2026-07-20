@@ -40,12 +40,6 @@ CREATE TABLE
         libelle TEXT UNIQUE NOT NULL
     );
 
--- Exemple :
--- DEPOT
--- RETRAIT
--- TRANSFERT
--- PAIEMENT
-
 -- =====================================
 -- BAREME DES FRAIS
 -- =====================================
@@ -101,23 +95,22 @@ CREATE TABLE
         FOREIGN KEY (id_transaction) REFERENCES transaction_mm (id)
     );
 
+-- =====================================
+-- SEEDS
+-- =====================================
 
 INSERT INTO operateur (nom, email, password) VALUES
 ('admin', 'admin@gmail.com', 'admin');
 
 INSERT INTO client (nom, numero) VALUES
-('Jean', '0341234567');
+('Jean', '0341234567'),
+('Alice', '0340000001'),
+('Bob', '0330000002');
 
 INSERT INTO type_operation (libelle) VALUES
 ('DEPOT'),
 ('RETRAIT'),
 ('TRANSFERT');
-
-INSERT INTO bareme_frais (id_type_operation, montant_min, montant_max, frais) VALUES
-(1, 0, 50000, 500),
-(2, 0, 50000, 1000),
-(3, 0, 100000, 1500);
-
 
 INSERT INTO bareme_frais (id_type_operation, montant_min, montant_max, frais) VALUES
 (2, 100, 1000, 50),
