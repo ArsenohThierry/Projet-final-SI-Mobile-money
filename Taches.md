@@ -28,6 +28,7 @@ le systeme doit calculer automatiquement le frais a partir du montant de la tabl
 
 ### Arsenoh-4031 :
 
+#### V1
 CRUD = CRUD + Liste flitrable
 
 - [ok]Login (cote client et operateur):
@@ -42,11 +43,18 @@ CRUD = CRUD + Liste flitrable
 - [ok]CRUD des cleints:
     - [ok]Detail d'un client quand on clique dessus : (Nom, numero , solde , date creation)
 - [ok]Ajoute de CSS et design :
-=======
 
-## V1 : 
-### Initialisation du projet : 
-- Création du dépôt github (2 min)
-- Lecture et comprehension du projet ( 20 min)
-- Conception base
->>>>>>> Stashed changes
+#### V2 :
+
+- [ok]Lors du transfert :
+    - [ok]Si le numero a envoyer est du meme operateur , on peut inclure les frais de retrait du destinataire 
+        - [ok]Mais on doit verifier si ce numero existe
+    - [ok]Si le numero n'est pas celui de l'operateur , et est compris dans les prefixes des autres operateurs , pas besoin de verifier si le numero existe , juste verifier si le prefixe est valide
+        - [ok]logique si autre operateur : Lors de l'envoi :
+            - [ok]get le prefixe , 
+            - [ok]get la comission % selon le prefixe ,
+            - [ok]inserer dans mouvement l'id client (mouvement 1) debit
+            - [ok]inserer dans mouvement le numero (mouvement 2) Credit, ( ca ne va dans aucun compte car c'est un numero d'autre operateur)
+
+- Page  des montants a envoyer aux autres operateurs ( chaque operateur)
+    - Liste des montants a envoyer filtres par operateurs 
