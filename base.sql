@@ -82,7 +82,8 @@ CREATE TABLE
     mouvement (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         id_transaction INTEGER NOT NULL,
-        id_client INTEGER NOT NULL,
+        id_client INTEGER,
+        numero VARCHAR(255),
         sens TEXT NOT NULL CHECK (sens IN ('DEBIT', 'CREDIT')),
         montant DECIMAL(12, 2) NOT NULL,
         frais DECIMAL(12, 2) NOT NULL DEFAULT 0,
@@ -111,15 +112,14 @@ INSERT INTO operateur(nom,pct_comission) VALUES
 ('Yas', 20),
 ('Orange', 10);
 
-INSERT INTO
-    user_operateur (nom, email, password)
-VALUES
-    ('admin', 'admin@gmail.com', 'admin');
+INSERT INTO user_operateur (nom, email, password) VALUES
+('admin', 'admin@gmail.com', 'admin'),
+('dede', 'dd', 'dd');
 
-INSERT INTO
-    user_operateur (nom, email, password)
-VALUES
-    ('dede', 'dd', 'dd');
+INSERT INTO prefixe (prefixe, id_operateur) VALUES
+('033', 1),
+('034', 2),
+('037', 3);
 
 INSERT INTO
     client (nom, numero)
@@ -172,3 +172,8 @@ VALUES
     (3, 250001, 500000, 1510),
     (3, 500001, 1000000, 2510),
     (3, 1000001, 2000000, 3010);
+
+INSERT INTO client (nom, numero)
+VALUES
+('Mika', '0371111111'),
+('Sara', '0372222222');

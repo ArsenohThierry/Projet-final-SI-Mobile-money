@@ -115,14 +115,154 @@ class Transaction extends Model
         return $db->transStatus();
     }
 
-    public function transfert($expediteur, $destinataire, $montant) {
+    // public function transfert($expediteur, $destinataire, $montant) {
+    //     $client = new Client();
+    //     $bareme = new BaremeFrais();
+    //     $mouvement = new Mouvement();
+
+    //     $frais = $bareme->calculerFrais(3, $montant);
+
+    //     $total = $montant + $frais;
+
+    //     if ($client->getSolde($expediteur) < $total) {
+    //         return false;
+    //     }
+
+    //     $db = db_connect();
+    //     $db->transStart();
+
+    //     $idTranscation = $this->insert([
+    //         'id_type_operation' => 3,
+    //         'montant' => $montant
+    //     ]);
+
+    //     $mouvement->debit(
+    //         $idTranscation,
+    //         $expediteur,
+    //         $total
+    //     );
+
+    //     $mouvement->credit(
+    //         $idTranscation,
+    //         $destinataire,
+    //         $montant
+    //     );
+
+    //     $db->table('gain')->insert([
+    //         'id_transaction' => $idTranscation,
+    //         'montant' => $frais
+    //     ]);
+
+    //     $db->transComplete();
+
+    //     return $db->transStatus();
+    // }
+
+    public function transfert(int $idExpediteur, array $idDestinataires, float $montant, bool $priseEnChargeRetrait = false) {
         $client = new Client();
         $bareme = new BaremeFrais();
         $mouvement = new Mouvement();
 
+        if (count($idDestinataires) == 0) {
+            return false;
+        }
+
+        $numeroExpediteur = $client->find($idExpediteur)['numero'];
+
+        foreach ($idDestinataires as $idDestinataire) {
+
+            $dest = $client->find($idDestinataire);
+
+            if (!$dest) {
+                return false;
+            }
+
+            $memeOperateur = $client->memeOperateur(
+                $numeroExpediteur,
+                $dest['numero']
+            );
+
+            // transfert multiple autorisé qu'entre clients du même opérateur
+            $transfertMultiple = count($idDestinataires) > 1;
+            if($transfertMultiple && !$memeOperateur) {
+                return false;
+            }
+
+            // impossible de prendre en charge les frais si opérateurs différents
+            if ($priseEnChargeRetrait && !$memeOperateur) {
+                return false;
+            }
+        }
+
+        $nbDestinataires = count($idDestinataires);
+        $part = $montant / $nbDestinataires;
+
+        $fraisTransfert = $bareme->calculerFrais(3, $montant);
+
+        $fraisRetrait = 0;
+
+        if ($priseEnChargeRetrait) {
+            $fraisRetrait = $bareme->calculerFrais(2, $part);
+        }
+
+        $totalDebit = $montant + $fraisTransfert + ($fraisRetrait * $nbDestinataires);
+
+        if ($client->getSolde($idExpediteur) < $totalDebit) {
+            return false;
+        }
+
+        $db = db_connect();
+        $db->transStart();
+
+        $this->insert([
+            'id_type_operation' => 3,
+            'montant' => $montant
+        ]);
+
+        $idTransaction = $this->insertID();
+
+        $mouvement->debit(
+            $idTransaction,
+            $idExpediteur,
+            $totalDebit,
+            $fraisTransfert
+        );
+
+        foreach ($idDestinataires as $idDestinataire) {
+
+            $mouvement->credit(
+                $idTransaction,
+                $idDestinataire,
+                $part,
+                $priseEnChargeRetrait ? $fraisRetrait : 0
+            );
+        }
+
+        $db->table('gain')->insert([
+            'id_transaction' => $idTransaction,
+            'montant' => $fraisTransfert
+        ]);
+
+        $db->transComplete();
+
+        return $db->transStatus();
+    }
+
+    public function transfertAutreOperateur($expediteur, $numeroDestinataire, $montant) {
+        $client = new Client();
+        $bareme = new BaremeFrais();
+        $mouvement = new Mouvement();
+        $prefixeModel = new PrefixeModel();
+        $operateurModel = new Operateur();
+
         $frais = $bareme->calculerFrais(3, $montant);
 
-        $total = $montant + $frais;
+        $idOperateurDest = $prefixeModel->getOperateurByNumero($numeroDestinataire);
+        $operateur = $operateurModel->find($idOperateurDest);
+        $pctCommission = $operateur->pct_comission;
+        $commission = $montant * ($pctCommission / 100);
+
+        $total = $montant + $frais + $commission;
 
         if ($client->getSolde($expediteur) < $total) {
             return false;
@@ -131,25 +271,17 @@ class Transaction extends Model
         $db = db_connect();
         $db->transStart();
 
-        $idTranscation = $this->insert([
+        $idTransaction = $this->insert([
             'id_type_operation' => 3,
             'montant' => $montant
         ]);
 
-        $mouvement->debit(
-            $idTranscation,
-            $expediteur,
-            $total
-        );
+        $mouvement->debit($idTransaction, $expediteur, $total);
 
-        $mouvement->credit(
-            $idTranscation,
-            $destinataire,
-            $montant
-        );
+        $mouvement->creditParNumero($idTransaction, $numeroDestinataire, $montant);
 
         $db->table('gain')->insert([
-            'id_transaction' => $idTranscation,
+            'id_transaction' => $idTransaction,
             'montant' => $frais
         ]);
 
@@ -160,24 +292,30 @@ class Transaction extends Model
 
     public function historique($idClient)
     {
-        return $this
+        $db = db_connect();
+        return $db->table('mouvement m')
             ->select('
-                transaction_mm.*,
-                type_operation.libelle,
-                mouvement.sens,
-                mouvement.montant montant_mouvement
+                t.date_transaction,
+                t.montant montant_transaction,
+                ty.libelle,
+                m.sens,
+                m.montant montant_mouvement,
+                cm.numero numero_counterpart,
+                cm.sens sens_counterpart,
+                cc.numero numero_counterpart_client,
+                cc.nom nom_counterpart_client,
+                o.pct_comission
             ')
-            ->join(
-                'mouvement',
-                'mouvement.id_transaction = transaction_mm.id'
-            )
-            ->join(
-                'type_operation',
-                'type_operation.id = transaction_mm.id_type_operation'
-            )
-            ->where('mouvement.id_client',$idClient)
-            ->orderBy('date_transaction','DESC')
-            ->findAll();
+            ->join('transaction_mm t', 't.id = m.id_transaction')
+            ->join('type_operation ty', 'ty.id = t.id_type_operation')
+            ->join('mouvement cm', 'cm.id_transaction = m.id_transaction AND cm.id != m.id')
+            ->join('client cc', 'cc.id = cm.id_client', 'left')
+            ->join('prefixe pf', 'SUBSTR(cm.numero, 1, 3) = pf.prefixe', 'left')
+            ->join('operateur o', 'o.id = pf.id_operateur', 'left')
+            ->where('m.id_client', $idClient)
+            ->orderBy('t.date_transaction', 'DESC')
+            ->get()
+            ->getResultArray();
     }
 
 }

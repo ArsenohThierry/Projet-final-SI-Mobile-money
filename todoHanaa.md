@@ -1,3 +1,5 @@
+## v1
+
 ### conception base
 - user: id numero  role
 - operation: id libelle(depot retrait transfert)
@@ -73,25 +75,16 @@ retourner montant_frais
 
 
 historique
-SELECT
-
-transaction
-
-operation
-
-date
-
-montant
-
-type
-
+SELECT transaction operation date montant type
 FROM mouvement
-
 JOIN transaction
-
 JOIN operation
-
 WHERE id_user=?
-
 ORDER BY date DESC
 
+
+
+## v2
+### algo
+transfert
+expediteur > recup son num > pour chaque destinataire | verifier qu'il existe, verifier mm operateur | > si u seul faux | erreur |  part = montant / nbDestinataires > calcul frais transfert(par part) > si priseEnChargeRetrait |ajouter frais retarit| > crrer transaction et blablabla > debit expediteur > credit de chaque destinataire > gain

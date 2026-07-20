@@ -9,7 +9,7 @@
 <body>
     <!-- Topbar -->
     <div class="topbar">
-        <a href="/client/dashboard" class="topbar-brand">VolaAtHome</a>
+        <a href="/dashboard" class="topbar-brand">VolaAtHome</a>
         <div class="topbar-nav">
             <span style="color:var(--gray-500);font-size:0.85rem;"><?= esc($client['nom']) ?></span>
             <a href="/client/logout" class="btn-logout">Déconnexion</a>

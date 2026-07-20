@@ -46,37 +46,125 @@ class TransactionController extends BaseController
     {
         if ($this->request->getMethod() == "POST") {
 
-            $numero = $this->request->getPost('numero');
+            $numeros = $this->request->getPost('numero');
             $montant = $this->request->getPost('montant');
 
+            $listeNumeros = preg_split(
+                "/\r\n|\n|\r/",
+                trim($numeros)
+            );
+
+            $listeNumeros = array_filter($listeNumeros, fn($n) => trim($n) !== '');
+
+            if (count($listeNumeros) === 0) {
+                return redirect()->back()->with('erreur', 'Veuillez entrer au moins un numéro.');
+            }
+
             $prefixeModel = new PrefixeModel();
-            if (!$prefixeModel->estValide($numero)) {
-                return redirect()->back()->with('erreur', 'Numero non Valide');
-            }
-
             $clientModel = new Client();
+            $idClient = session()->get('id_client');
+            $sender = $clientModel->find($idClient);
+            $senderOperateur = $prefixeModel->getOperateurByNumero($sender['numero']);
 
-            $destinataire = $clientModel->getByNumero($numero);
+            $isMultiTransfer = count($listeNumeros) > 1;
 
-            if (!$destinataire) {
-                return redirect()->back()->with('erreur', 'Client introuvable');
-            }
+            if ($isMultiTransfer) {
+                $idDestinataires = [];
 
-            $transaction = new Transaction();
+                foreach ($listeNumeros as $numero) {
+                    $numero = trim($numero);
 
-            if (
-                !$transaction->transfert(
-                    session()->get('id_client'),
-                    $destinataire['id'],
-                    $montant
-                )
-            ) {
-                return redirect()->back()->with('erreur', 'Solde insuffisant');
+                    $recipientOperateur = $prefixeModel->getOperateurByNumero($numero);
+                    if ($recipientOperateur === null) {
+                        return redirect()->back()->with('erreur', "Numéro non valide : " . $numero);
+                    }
+
+                    if ($recipientOperateur !== $senderOperateur) {
+                        return redirect()->back()->with('erreur', "Transfert multiple : tous les numéros doivent être du même opérateur. " . $numero . " est d'un autre opérateur.");
+                    }
+
+                    $destinataire = $clientModel->getByNumero($numero);
+                    if (!$destinataire) {
+                        return redirect()->back()->with('erreur', "Client introuvable : " . $numero);
+                    }
+
+                    $idDestinataires[] = $destinataire['id'];
+                }
+
+                $transaction = new Transaction();
+                $priseEnChargeRetrait = $this->request->getPost('frais_retrait') ? true : false;
+
+                if (!$transaction->transfert($idClient, $idDestinataires, $montant, $priseEnChargeRetrait)) {
+                    return redirect()->back()->with('erreur', 'Transfert impossible. Vérifiez votre solde ou les conditions.');
+                }
+            } else {
+                $numero = trim($listeNumeros[0]);
+                $recipientOperateur = $prefixeModel->getOperateurByNumero($numero);
+
+                if ($recipientOperateur === null) {
+                    return redirect()->back()->with('erreur', 'Numero non Valide');
+                }
+
+                if ($senderOperateur === $recipientOperateur) {
+                    $destinataire = $clientModel->getByNumero($numero);
+
+                    if (!$destinataire) {
+                        return redirect()->back()->with('erreur', 'Client introuvable');
+                    }
+
+                    $transaction = new Transaction();
+                    $priseEnChargeRetrait = $this->request->getPost('frais_retrait') ? true : false;
+
+                    if (!$transaction->transfert($idClient, [$destinataire['id']], $montant, $priseEnChargeRetrait)) {
+                        return redirect()->back()->with('erreur', 'Solde insuffisant');
+                    }
+                } else {
+                    $transaction = new Transaction();
+                    if (!$transaction->transfertAutreOperateur($idClient, $numero, $montant)) {
+                        return redirect()->back()->with('erreur', 'Solde insuffisant');
+                    }
+                }
             }
 
             return redirect()->to('/dashboard');
         }
 
         return view('transfert');
+    }
+
+    public function verifierOperateur(){
+        $numero = $this->request->getPost('numero');
+
+        $client = new Client();
+
+        $expediteur =
+            $client->find(session()->get('id_client'));
+
+        $meme =
+            $client->memeOperateur(
+                $expediteur['numero'],
+                $numero
+            );
+
+        return $this->response->setJSON([
+            'memeOperateur'=>$meme
+        ]);
+    }
+
+    public function calculerFrais(){
+        $montant =
+            $this->request->getPost('montant');
+
+        $bareme = new \App\Models\BaremeFrais();
+
+        $frais =
+            $bareme->calculerFrais(
+                3,
+                $montant
+            );
+
+        return $this->response->setJSON([
+            'frais'=>$frais
+        ]);
     }
 }

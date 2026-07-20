@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\OperateurModel;
+use App\Models\Operateur;
 use App\Models\GainModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -15,6 +16,23 @@ class OperateurControlleur extends BaseController
         $totalGains = $model->totalGains();
 
         return view('operateur/dashboard', ['totalGains' => $totalGains]);
+    }
+
+    public function montantsAEnvoyer()
+    {
+        $operateurModel = new Operateur();
+
+        $idOperateur = $this->request->getGet('id_operateur');
+        $resume = $operateurModel->montantsAEnvoyer();
+        $details = $operateurModel->detailMontantsAEnvoyer($idOperateur);
+        $operateurs = $operateurModel->findAll();
+
+        return view('operateur/montants_a_envoyer', [
+            'resume'     => $resume,
+            'details'    => $details,
+            'operateurs' => $operateurs,
+            'filters'    => ['id_operateur' => $idOperateur ?? ''],
+        ]);
     }
 
     public function logout()

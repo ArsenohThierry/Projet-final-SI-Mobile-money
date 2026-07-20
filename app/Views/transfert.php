@@ -15,33 +15,182 @@
     </div>
 
     <div class="page page--narrow">
-        <a href="/client/dashboard" class="back-link">Dashboard</a>
+
+        <a href="<?= base_url('/dashboard'); ?>" class="back-link">
+            Dashboard
+        </a>
 
         <?php if(session()->getFlashdata('erreur')): ?>
-            <div class="alert alert-error"><?= session()->getFlashdata('erreur') ?></div>
+            <div class="alert alert-error">
+                <?= session()->getFlashdata('erreur') ?>
+            </div>
         <?php endif; ?>
 
         <div class="card">
+
             <div class="page-header" style="margin-bottom:1.5rem;">
                 <h1 style="font-size:1.25rem;">→ Transfert</h1>
             </div>
 
             <form method="post">
+
                 <?= csrf_field() ?>
 
                 <div class="form-group">
-                    <label>Numéro destinataire</label>
-                    <input type="text" name="numero" placeholder="Ex: 033 12 345 67" required>
+                    <label>
+                        Numéro(s) destinataire
+                    </label>
+
+                    <textarea
+                        name="numero"
+                        id="numero"
+                        placeholder="Un numéro par ligne&#10;Ex: 0341234567"
+                        required></textarea>
+
+                    <small>
+                        Plusieurs numéros = transfert multiple (même opérateur uniquement)
+                    </small>
                 </div>
 
                 <div class="form-group">
-                    <label>Montant</label>
-                    <input type="number" name="montant" step="0.01" min="1" placeholder="0" required>
+                    <label>Montant total</label>
+
+                    <input
+                        type="number"
+                        name="montant"
+                        id="montant"
+                        step="0.01"
+                        min="1"
+                        required>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width:100%;">Transférer</button>
+                <div class="form-group">
+                    <label>
+                        Frais transfert
+                    </label>
+
+                    <input
+                        type="text"
+                        id="frais"
+                        readonly
+                        value="0">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="frais_retrait"
+                            id="frais_retrait"
+                            value="1"
+                            disabled>
+
+                        Prendre en charge les frais de retrait
+                    </label>
+
+                    <small id="message-operateur"></small>
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    style="width:100%;">
+
+                    Transférer
+
+                </button>
+
             </form>
+
         </div>
+
     </div>
+
+    <script>
+
+    const numero = document.getElementById('numero');
+    const montant = document.getElementById('montant');
+
+    const checkbox =
+    document.getElementById('frais_retrait');
+
+    const message =
+    document.getElementById('message-operateur');
+
+    numero.addEventListener('change', verifierOperateur);
+
+    async function verifierOperateur(){
+
+        let lignes =
+            numero.value.trim().split("\n");
+
+        if(lignes.length > 1){
+            checkbox.disabled = true;
+            checkbox.checked = false;
+            message.innerHTML =
+            "Transfert multiple : opérateurs identiques obligatoires";
+            return;
+        }
+
+        let response =
+        await fetch(
+            "<?= base_url('client/verifier-operateur') ?>",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":
+                    "application/x-www-form-urlencoded"
+                },
+                body:
+                "numero="+numero.value
+            }
+        );
+
+        let data =
+        await response.json();
+
+        if(data.memeOperateur){
+            checkbox.disabled=false;
+            message.innerHTML =
+            "Même opérateur — frais de retrait optionnels";
+        }
+        else{
+            checkbox.disabled=true;
+            checkbox.checked=false;
+            message.innerHTML =
+            "Opérateurs différents — transfert simple uniquement, pas de frais de retrait";
+        }
+    }
+
+    montant.addEventListener('input', calculerFrais);
+
+    async function calculerFrais(){
+
+        if(!montant.value)
+            return;
+
+        let response =
+        await fetch(
+            "<?= base_url('client/calculer-frais') ?>",
+            {
+            method:"POST",
+            headers:{
+                "Content-Type":
+                "application/x-www-form-urlencoded"
+            },
+            body:
+            "montant="+montant.value
+            }
+        );
+
+        let data =
+        await response.json();
+
+        document.getElementById('frais').value =
+            data.frais;
+    }
+
+    </script>
+    
 </body>
 </html>

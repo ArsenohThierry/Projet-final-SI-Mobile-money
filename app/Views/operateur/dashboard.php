@@ -53,6 +53,18 @@
                 <div class="action-card-label">Barème des frais</div>
                 <div class="action-card-desc">Configurer les frais par montant</div>
             </a>
+
+            <a href="/operateur-crud" class="action-card">
+                <div class="action-card-icon">operator</div>
+                <div class="action-card-label">Opérateurs</div>
+                <div class="action-card-desc">Gérer les opérateurs</div>
+            </a>
+
+            <a href="/operateur/montants-a-envoyer" class="action-card">
+                <div class="action-card-icon">$</div>
+                <div class="action-card-label">Montants à envoyer</div>
+                <div class="action-card-desc">Voir les montants dus aux autres opérateurs</div>
+            </a>
         </div>
     </div>
 </body>
