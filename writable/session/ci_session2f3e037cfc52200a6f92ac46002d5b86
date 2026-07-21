@@ -1,1 +1,1 @@
-__ci_last_regenerate|i:1784611574;id_operateur|i:1;nom_operateur|s:5:"admin";logged_in|b:1;_ci_previous_url|s:39:"http://localhost:8080/index.php/prefixe";
+__ci_last_regenerate|i:1784611884;id_operateur|i:1;nom_operateur|s:5:"admin";logged_in|b:1;_ci_previous_url|s:49:"http://localhost:8080/index.php/auth/login-client";__ci_vars|a:0:{}

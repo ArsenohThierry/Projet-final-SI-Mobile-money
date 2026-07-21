@@ -13,9 +13,9 @@ $routes->get('/', 'AuthController::index');
 $routes->get('/auth/login-operateur', 'AuthController::loginOperateur');
 $routes->post('/auth/login-operateur', 'OperateurController::loginOperateur');
 $routes->get('/auth/login-client', 'AuthController::loginClient');
-$routes->post('/auth/login-client', 'ClientControlleur::loginClient');
+$routes->post('/auth/login-client', 'ClientController::loginClient');
 $routes->get('/auth/inscription-client', 'AuthController::inscriptionClient');
-$routes->post('/client/inscription', 'ClientControlleur::inscription');
+$routes->post('/client/inscription', 'ClientController::inscription');
 
 // ========================================
 // ROUTES OPERATEUR (filter: operateur)
@@ -81,7 +81,7 @@ $routes->group('', ['filter' => 'client'], function ($routes) {
     $routes->post('/retrait', 'TransactionController::retrait');
     $routes->get('/transfert', 'TransactionController::transfert');
     $routes->post('/transfert', 'TransactionController::transfert');
-    $routes->get('/client/logout', 'ClientControlleur::logout');
+    $routes->get('/client/logout', 'ClientController::logout');
     $routes->post(
         'client/verifier-operateur',
         'TransactionController::verifierOperateur'
