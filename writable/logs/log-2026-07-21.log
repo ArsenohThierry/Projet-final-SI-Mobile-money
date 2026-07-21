@@ -1,4 +1,24 @@
-CRITICAL - 2026-07-21 05:31:25 --> Error: Class "App\Models\ClientModel" not found
+CRITICAL - 2026-07-21 04:39:43 --> Error: Class "App\Models\BaremeFraisModel" not found
+[Method: GET, Route: bareme-frais]
+in APPPATH/Controllers/BaremeFraisController.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\BaremeFraisController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ 7 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
+CRITICAL - 2026-07-21 04:39:58 --> Error: Class "App\Models\BaremeFraisModel" not found
+[Method: GET, Route: bareme-frais]
+in APPPATH/Controllers/BaremeFraisController.php on line 13.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\BaremeFraisController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ 7 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
+CRITICAL - 2026-07-21 05:50:57 --> Error: Class "App\Models\ClientModel" not found
 [Method: POST, Route: auth/login-client]
 in APPPATH/Controllers/ClientControlleur.php on line 20.
  1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\ClientControlleur->loginClient()
@@ -7,15 +27,4 @@ in APPPATH/Controllers/ClientControlleur.php on line 20.
  4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
  5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
  6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
- 7 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
-CRITICAL - 2026-07-21 05:32:53 --> ErrorException: Attempt to read property "id" on array
-[Method: POST, Route: auth/login-client]
-in APPPATH/Controllers/ClientController.php on line 94.
- 1 APPPATH/Controllers/ClientController.php(94): CodeIgniter\Debug\Exceptions->errorHandler()
- 2 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\ClientController->loginClient()
- 3 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
- 4 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
- 5 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
- 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
- 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
- 8 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
+ 7 SYSTEMPATH/rewrite.php(44): require_once('/home/itu/S4/SI/Projet-final-SI-Mobile-money/public/index.php')

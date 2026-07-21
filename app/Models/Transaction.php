@@ -197,7 +197,9 @@ class Transaction extends Model
         $nbDestinataires = count($idDestinataires);
         $part = $montant / $nbDestinataires;
 
-        $fraisTransfert = $bareme->calculerFrais(3, $montant);
+        // $fraisTransfert = $bareme->calculerFrais(3, $montant);
+        $fraisTransfertUnitaire = $bareme->calculerFrais(3, $part);
+        $fraisTransfert = $fraisTransfertUnitaire * $nbDestinataires;
 
         $fraisRetrait = 0;
 
