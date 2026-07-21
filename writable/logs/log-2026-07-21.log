@@ -1,5 +1,6 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 CRITICAL - 2026-07-21 05:31:25 --> Error: Class "App\Models\ClientModel" not found
 [Method: POST, Route: auth/login-client]
 in APPPATH/Controllers/ClientControlleur.php on line 20.
@@ -22,6 +23,8 @@ in APPPATH/Controllers/ClientController.php on line 94.
  7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
  8 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 ERROR - 2026-07-21 06:51:48 --> UNIQUE constraint failed: client.numero
@@ -94,6 +97,9 @@ in SYSTEMPATH/Database/SQLite3/Connection.php on line 163.
 15 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
 16 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
