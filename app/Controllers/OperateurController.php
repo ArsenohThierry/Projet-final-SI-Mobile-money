@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\Operateur;
 use App\Models\UserOperateurModel;
 use App\Models\GainModel;
+use App\Models\Promotion;
 
 class OperateurController extends BaseController
 {
@@ -113,5 +114,21 @@ class OperateurController extends BaseController
         $model->delete($id);
 
         return redirect()->to('/operateur-crud');
+    }
+
+    public function promotions(){
+
+    // gel tous les promotions 
+    $promotonmodel = new Promotion();
+
+    $promotions = $promotonmodel->findAll();
+
+        return view('promotions', ['promotions' => $promotions]);
+    }
+
+    public function promotionsEdit($num){
+         // gel tous les promotions 
+    $promotonmodel = new Promotion();
+        
     }
 }

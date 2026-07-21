@@ -1,30 +1,64 @@
-CRITICAL - 2026-07-21 04:39:43 --> Error: Class "App\Models\BaremeFraisModel" not found
-[Method: GET, Route: bareme-frais]
-in APPPATH/Controllers/BaremeFraisController.php on line 13.
- 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\BaremeFraisController->index()
- 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
- 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
- 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
- 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
- 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
- 7 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
-CRITICAL - 2026-07-21 04:39:58 --> Error: Class "App\Models\BaremeFraisModel" not found
-[Method: GET, Route: bareme-frais]
-in APPPATH/Controllers/BaremeFraisController.php on line 13.
- 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\BaremeFraisController->index()
- 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
- 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
- 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
- 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
- 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
- 7 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
-CRITICAL - 2026-07-21 05:50:57 --> Error: Class "App\Models\ClientModel" not found
-[Method: POST, Route: auth/login-client]
-in APPPATH/Controllers/ClientControlleur.php on line 20.
- 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\ClientControlleur->loginClient()
- 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
- 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
- 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
- 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
- 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
- 7 SYSTEMPATH/rewrite.php(44): require_once('/home/itu/S4/SI/Projet-final-SI-Mobile-money/public/index.php')
+CRITICAL - 2026-07-21 07:16:42 --> TypeError: Unsupported operand types: float * array
+[Method: POST, Route: transfert]
+in APPPATH/Models/Transaction.php on line 213.
+ 1 APPPATH/Controllers/TransactionController.php(118): App\Models\Transaction->transfert()
+ 2 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\TransactionController->transfert()
+ 3 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
+CRITICAL - 2026-07-21 07:17:14 --> ErrorException: Undefined array key 0
+[Method: POST, Route: transfert]
+in APPPATH/Models/Transaction.php on line 213.
+ 1 APPPATH/Models/Transaction.php(213): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/TransactionController.php(118): App\Models\Transaction->transfert()
+ 3 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\TransactionController->transfert()
+ 4 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 6 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 8 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ 9 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
+CRITICAL - 2026-07-21 07:17:31 --> TypeError: Unsupported operand types: array * float
+[Method: POST, Route: transfert]
+in APPPATH/Models/Transaction.php on line 213.
+ 1 APPPATH/Controllers/TransactionController.php(118): App\Models\Transaction->transfert()
+ 2 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\TransactionController->transfert()
+ 3 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 5 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ 8 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
+CRITICAL - 2026-07-21 07:27:02 --> ErrorException: Attempt to read property "id" on array
+[Method: GET, Route: operateur/promotions]
+in APPPATH/Views/promotions.php on line 39.
+ 1 APPPATH/Views/promotions.php(39): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(240): include('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/app/Views/promotions.php')
+ 3 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/OperateurController.php(126): view()
+ 6 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\OperateurController->promotions()
+ 7 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')
+CRITICAL - 2026-07-21 07:27:29 --> ErrorException: Attempt to read property "pourcentage" on array
+[Method: GET, Route: operateur/promotions]
+in APPPATH/Views/promotions.php on line 40.
+ 1 APPPATH/Views/promotions.php(40): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(240): include('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/app/Views/promotions.php')
+ 3 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/OperateurController.php(126): view()
+ 6 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\OperateurController->promotions()
+ 7 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+12 SYSTEMPATH/rewrite.php(44): require_once('/home/zenoh/Bureau/Projet-final-SI-Mobile-money/public/index.php')

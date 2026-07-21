@@ -17,6 +17,8 @@ $routes->post('/auth/login-client', 'ClientController::loginClient');
 $routes->get('/auth/inscription-client', 'AuthController::inscriptionClient');
 $routes->post('/client/inscription', 'ClientController::inscription');
 
+
+
 // ========================================
 // ROUTES OPERATEUR (filter: operateur)
 // ========================================
@@ -25,6 +27,10 @@ $routes->group('', ['filter' => 'operateur'], function ($routes) {
     $routes->get('/operateur/dashboard', 'OperateurController::dashboard');
     $routes->get('/operateur/logout', 'OperateurController::logout');
     $routes->get('/operateur/montants-a-envoyer', 'OperateurController::montantsAEnvoyer');
+
+    // Promotions 
+    $routes->get('/operateur/promotions', 'OperateurController::promotions');
+    $routes->get('/promotions/edit/(:num)', 'OperateurController::promotionsEdit');
 
     // CRUD Client
     $routes->get('/client', 'ClientController::index');
@@ -97,3 +103,6 @@ $routes->group('', ['filter' => 'client'], function ($routes) {
         'TransactionController::calculerFraisRetrait'
     );
 });
+
+
+

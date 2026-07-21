@@ -178,3 +178,11 @@ INSERT INTO client (nom, numero)
 VALUES
 ('Mika', '0371111111'),
 ('Sara', '0372222222');
+
+
+CREATE TABLE IF NOT EXISTS promotion(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pourcentage INTEGER NOT NULL
+)
+
+INSERT INTO promotion(pourcentage) VALUES(10);
