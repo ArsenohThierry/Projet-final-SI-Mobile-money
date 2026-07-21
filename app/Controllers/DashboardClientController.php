@@ -34,4 +34,14 @@ class DashboardClientController extends BaseController
 
         return view('historique', $data);
     }
+
+    public function epargne() {
+        $idClient = session()->get('id_client');
+
+        $transactionModel = new Transaction();
+
+        $data['historique'] = $transactionModel->historique($idClient);
+
+        return view('historique', $data);
+    }
 }

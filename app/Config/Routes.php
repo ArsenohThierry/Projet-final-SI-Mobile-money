@@ -102,6 +102,9 @@ $routes->group('', ['filter' => 'client'], function ($routes) {
         'client/claculer-frais-retrait',
         'TransactionController::calculerFraisRetrait'
     );
+
+    $routes->get('/epargne', 'EpargneController::add');
+    $routes->post('/epargne', 'EpargneController::add');
 });
 
 

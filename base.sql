@@ -186,3 +186,19 @@ CREATE TABLE IF NOT EXISTS promotion(
 )
 
 INSERT INTO promotion(pourcentage) VALUES(10);
+
+
+CREATE TABLE epargne(
+    id INTEGER PRIMARY KEY,
+    id_client INTEGER NOT NULL,
+    pourcentage INTEGER NOT NULL,
+    FOREIGN KEY (id_client) REFERENCES client(id)
+);
+
+CREATE TABLE compte_epargne (
+    id INTEGER PRIMARY KEY,
+    id_epargne INTEGER NOT NULL,
+    daty DATETIME DEFAULT CURRENT_TIMESTAMP,
+    montant DECIMAL(12, 2) NOT NULL,
+    FOREIGN KEY (id_epargne) REFERENCES epargne(id)
+);

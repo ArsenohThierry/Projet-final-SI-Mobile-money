@@ -54,6 +54,12 @@
                 <div class="action-card-label">Historique</div>
                 <div class="action-card-desc">Voir les opérations</div>
             </a>
+
+            <a href="/epargne" class="action-card">
+                <div class="action-card-icon">☰</div>
+                <div class="action-card-label">Compte épargne</div>
+                <div class="action-card-desc">Voir le compte épargne</div>
+            </a>
         </div>
     </div>
 </body>

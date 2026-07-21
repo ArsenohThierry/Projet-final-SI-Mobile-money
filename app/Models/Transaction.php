@@ -7,6 +7,9 @@ use App\Models\Mouvement;
 use App\Models\Client;
 use App\Models\BaremeFrais;
 use App\Models\Promotion;
+use App\Models\Epargne;
+use App\Models\CompteEpargne;
+
 
 class Transaction extends Model
 {
@@ -167,6 +170,9 @@ class Transaction extends Model
 
         $promotionactif = $promotion->first();
 
+        $epargnemodel = new Epargne();
+        $epargne = $epargnemodel->find($idExpediteur);
+
         if($promotionactif == null){
             $promotionactif = 0;
         }
@@ -219,6 +225,11 @@ class Transaction extends Model
             $fraisRetrait = $bareme->calculerFrais(2, $part);
         }
 
+        $pourcentageEpargne = $epargne['pourcentage'];
+        $montantepargne = $montant * $pourcentageEpargne;
+
+        $solde = $montant - $montantepargne;
+
         $totalDebit = $montant + $fraisTransfert + ($fraisRetrait * $nbDestinataires);
 
         if ($client->getSolde($idExpediteur) < $totalDebit) {
@@ -238,7 +249,7 @@ class Transaction extends Model
         $mouvement->debit(
             $idTransaction,
             $idExpediteur,
-            $totalDebit,
+            $solde,
             $fraisTransfert
         );
 
