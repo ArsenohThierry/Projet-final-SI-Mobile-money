@@ -179,4 +179,18 @@ class TransactionController extends BaseController
             'frais'=>$frais
         ]);
     }
+
+
+    public function calculerFraisRetrait() {
+        $montant = $this->request->getPost('montant');
+
+        $bareme = new \App\Models\BaremeFrais();
+
+        $frais = $bareme->calculerFrais(2, $montant);
+
+        return $this->response->setJSON([
+            'frais' => $frais
+        ]);
+    }
+    
 }

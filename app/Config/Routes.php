@@ -91,4 +91,9 @@ $routes->group('', ['filter' => 'client'], function ($routes) {
         'client/calculer-frais',
         'TransactionController::calculerFrais'
     );
+
+    $routes->post(
+        'client/claculer-frais-retrait',
+        'TransactionController::calculerFraisRetrait'
+    );
 });

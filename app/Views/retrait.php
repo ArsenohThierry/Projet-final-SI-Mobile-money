@@ -34,9 +34,45 @@
                     <input type="number" name="montant" step="0.01" min="1" placeholder="0" required>
                 </div>
 
+                <div class="form-group">
+                    <label>
+                        Frais retrait
+                    </label>
+
+                    <input type="text" id="frais" readonly value="0">
+                </div>
+
                 <button type="submit" class="btn btn-primary" style="width:100%;">Retirer</button>
             </form>
         </div>
     </div>
+
+
+    <script>
+        const montantInput = document.querySelector('input[name="montant"]');
+        const fraisInput = document.getElementById('frais');
+
+        montantInput.addEventListener('input', calculerFraisRetrait);
+
+        async function calculerFraisRetrait() {
+            if(!montantInput.value)
+                return;
+
+            let response = await fetch(
+                "<?= base_url('client/calculer-frais-retrait') ?>",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: "montant=" + montantInput.value
+                }
+            );
+
+            let data = await response.json();
+
+            document.getElementById('frais').value = data.frais;
+        }
+    </script>
 </body>
 </html>
