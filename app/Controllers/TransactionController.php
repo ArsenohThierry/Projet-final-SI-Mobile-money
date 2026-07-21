@@ -137,17 +137,29 @@ class TransactionController extends BaseController
 
         $client = new Client();
 
-        $expediteur =
-            $client->find(session()->get('id_client'));
+        $expediteur = $client->find(session()->get('id_client'));
 
-        $meme =
-            $client->memeOperateur(
-                $expediteur['numero'],
-                $numero
-            );
+        // on découpe en lignes et on nettoie les vides/espaces
+        $numeros = array_filter(
+            array_map('trim', explode("\n", $numero)),
+            fn($n) => $n !== ''
+        );
+
+        if (count($numeros) === 0) {
+            return $this->response->setJSON(['memeOperateur' => false]);
+        }
+
+        $meme = true;
+
+        foreach ($numeros as $n) {
+            if (!$client->memeOperateur($expediteur['numero'], $n)) {
+                $meme = false;
+                break;
+            }
+        }
 
         return $this->response->setJSON([
-            'memeOperateur'=>$meme
+            'memeOperateur' => $meme
         ]);
     }
 

@@ -120,17 +120,14 @@
     numero.addEventListener('input', verifierOperateur);
 
     async function verifierOperateur(){
-
-        let lignes = numero.value.trim().split("\n").filter(l => l.trim() !== "");
-
-        if(lignes.length === 0) return;
+        if(!numero.value.trim()) return;
 
         let response = await fetch(
             "<?= base_url('client/verifier-operateur') ?>",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: "numero=" + encodeURIComponent(JSON.stringify(lignes))
+                body: "numero=" + encodeURIComponent(numero.value)
             }
         );
 
@@ -138,14 +135,12 @@
 
         if(data.memeOperateur){
             checkbox.disabled = false;
-            message.innerHTML = lignes.length > 1
-                ? "Même opérateur pour tous les destinataires — frais de retrait optionnels"
-                : "Même opérateur — frais de retrait optionnels";
+            message.innerHTML = "Même opérateur — frais de retrait optionnels";
         }
         else{
             checkbox.disabled = true;
             checkbox.checked = false;
-            message.innerHTML = "Un ou plusieurs numéros d'opérateur différent — pas de frais de retrait";
+            message.innerHTML = "Opérateur(s) différent(s) — pas de frais de retrait";
         }
     }
 
