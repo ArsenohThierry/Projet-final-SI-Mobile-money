@@ -16,4 +16,9 @@ class GainModel extends Model
         $result = $this->select('SUM(montant) as total')->first();
         return (float) ($result->total ?? 0);
     }
+
+    public function totalGainsAutresOperateurs()
+    {
+        $result = $this->select()->first();
+    }
 }

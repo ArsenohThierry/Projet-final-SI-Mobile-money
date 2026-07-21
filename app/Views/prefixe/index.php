@@ -23,14 +23,15 @@
         <h2>Filtrer</h2>
         <form method="GET" action="/prefixe">
             <label>Operateur :</label>
-            <select name="id_operateur">
+            <select name="id_operateur" style="width:20%">
                 <option value="">Tous</option>
                 <?php foreach ($operateurs as $o): ?>
                     <option value="<?= $o->id ?>" <?= $filters['id_operateur'] == $o->id ? 'selected' : '' ?>><?= esc($o->nom) ?></option>
                 <?php endforeach; ?>
             </select>
-            <button type="submit" class="btn btn-primary">Filtrer</button>
-            <a href="/prefixe">Reinitialiser</a>
+            <br>
+            <button type="submit" class="btn btn-primary" style="margin-top:20px;margin-bottom:20px">Filtrer</button>
+            <a href="/prefixe" class="btn">Reinitialiser</a>
         </form>
 
         <div class="table-wrapper">

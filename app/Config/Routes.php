@@ -11,7 +11,7 @@ use CodeIgniter\Router\RouteCollection;
 // ========================================
 $routes->get('/', 'AuthController::index');
 $routes->get('/auth/login-operateur', 'AuthController::loginOperateur');
-$routes->post('/auth/login-operateur', 'OperateurControlleur::loginOperateur');
+$routes->post('/auth/login-operateur', 'OperateurController::loginOperateur');
 $routes->get('/auth/login-client', 'AuthController::loginClient');
 $routes->post('/auth/login-client', 'ClientControlleur::loginClient');
 $routes->get('/auth/inscription-client', 'AuthController::inscriptionClient');
@@ -22,9 +22,9 @@ $routes->post('/client/inscription', 'ClientControlleur::inscription');
 // ========================================
 $routes->group('', ['filter' => 'operateur'], function ($routes) {
 
-    $routes->get('/operateur/dashboard', 'OperateurControlleur::dashboard');
-    $routes->get('/operateur/logout', 'OperateurControlleur::logout');
-    $routes->get('/operateur/montants-a-envoyer', 'OperateurControlleur::montantsAEnvoyer');
+    $routes->get('/operateur/dashboard', 'OperateurController::dashboard');
+    $routes->get('/operateur/logout', 'OperateurController::logout');
+    $routes->get('/operateur/montants-a-envoyer', 'OperateurController::montantsAEnvoyer');
 
     // CRUD Client
     $routes->get('/client', 'ClientController::index');

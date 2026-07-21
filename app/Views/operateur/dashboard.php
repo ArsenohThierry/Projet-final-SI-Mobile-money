@@ -19,8 +19,12 @@
         <!-- Stats -->
         <div class="stats-grid">
             <div class="card">
-                <div class="card-title">Total des gains</div>
+                <div class="card-title">Total des gains </div>
                 <div class="card-value"><?= number_format($totalGains, 0, ',', ' ') ?> Ar</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Total des gains (Autres operateurs)</div>
+                <div class="card-value"><?= number_format($totalGainsAutresOperateurs, 0, ',', ' ') ?> Ar</div>
             </div>
         </div>
 

@@ -48,6 +48,16 @@ class Client extends Model
     protected $afterDelete    = [];
 
 
+    public function findByNumero(string $numero)
+    {
+        return $this->where('numero', $numero)->first();
+    }
+
+    public function inscrire(string $nom, string $numero)
+    {
+        return $this->insert(['nom' => $nom, 'numero' => $numero]);
+    }
+    
         public function getSolde($idClient) {
         $db = \Config\Database::connect();
 

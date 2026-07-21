@@ -3,14 +3,14 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\BaremeFraisModel;
+use App\Models\BaremeFrais;
 use App\Models\TypeOperationModel;
 
 class BaremeFraisController extends BaseController
 {
     public function index()
     {
-        $model   = new BaremeFraisModel();
+        $model   = new BaremeFrais();
         $typesOp = new TypeOperationModel();
 
         $builder = $model->builder();
@@ -69,7 +69,7 @@ class BaremeFraisController extends BaseController
 
     public function store()
     {
-        $model = new BaremeFraisModel();
+        $model = new BaremeFrais();
         $model->insert([
             'id_type_operation' => $this->request->getPost('id_type_operation'),
             'montant_min'       => $this->request->getPost('montant_min'),
@@ -82,7 +82,7 @@ class BaremeFraisController extends BaseController
 
     public function edit($id)
     {
-        $model  = new BaremeFraisModel();
+        $model  = new BaremeFrais();
         $typesM = new TypeOperationModel();
 
         $frais = $model->find($id);
@@ -93,7 +93,7 @@ class BaremeFraisController extends BaseController
 
     public function update($id)
     {
-        $model = new BaremeFraisModel();
+        $model = new BaremeFrais();
         $model->update($id, [
             'id_type_operation' => $this->request->getPost('id_type_operation'),
             'montant_min'       => $this->request->getPost('montant_min'),
@@ -106,7 +106,7 @@ class BaremeFraisController extends BaseController
 
     public function delete($id)
     {
-        $model = new BaremeFraisModel();
+        $model = new BaremeFrais();
         $model->delete($id);
 
         return redirect()->to('/bareme-frais');

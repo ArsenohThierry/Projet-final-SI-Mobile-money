@@ -56,5 +56,5 @@ CRUD = CRUD + Liste flitrable
             - [ok]inserer dans mouvement l'id client (mouvement 1) debit
             - [ok]inserer dans mouvement le numero (mouvement 2) Credit, ( ca ne va dans aucun compte car c'est un numero d'autre operateur)
 
-- Page  des montants a envoyer aux autres operateurs ( chaque operateur)
-    - Liste des montants a envoyer filtres par operateurs 
+- [ok]Page  des montants a envoyer aux autres operateurs ( chaque operateur)
+    - [ok]Liste des montants a envoyer filtres par operateurs 
