@@ -117,48 +117,70 @@
     const message =
     document.getElementById('message-operateur');
 
-    numero.addEventListener('change', verifierOperateur);
+    numero.addEventListener('input', verifierOperateur);
 
     async function verifierOperateur(){
 
         let lignes =
-            numero.value.trim().split("\n");
+            numero.value.trim().split("\n")
+            .map(n => n.trim())
+            .filter(n => n !== "");
 
-        if(lignes.length > 1){
+        if(lignes.length === 0){
             checkbox.disabled = true;
             checkbox.checked = false;
-            message.innerHTML =
-            "Transfert multiple : opérateurs identiques obligatoires";
+            message.innerHTML = "";
             return;
         }
 
-        let response =
-        await fetch(
-            "<?= base_url('client/verifier-operateur') ?>",
-            {
-                method:"POST",
-                headers:{
-                    "Content-Type":
-                    "application/x-www-form-urlencoded"
-                },
-                body:
-                "numero="+numero.value
+        if(lignes.length === 1){
+            let response = await fetch(
+                "<?= base_url('client/verifier-operateur') ?>",
+                {
+                    method:"POST",
+                    headers:{ "Content-Type": "application/x-www-form-urlencoded" },
+                    body: "numero=" + lignes[0]
+                }
+            );
+            let data = await response.json();
+
+            if(data.memeOperateur){
+                checkbox.disabled = false;
+                message.innerHTML = "Même opérateur — frais de retrait optionnels";
+            } else {
+                checkbox.disabled = true;
+                checkbox.checked = false;
+                message.innerHTML = "Opérateurs différents — pas de frais de retrait";
             }
-        );
-
-        let data =
-        await response.json();
-
-        if(data.memeOperateur){
-            checkbox.disabled=false;
-            message.innerHTML =
-            "Même opérateur — frais de retrait optionnels";
+            return;
         }
-        else{
-            checkbox.disabled=true;
-            checkbox.checked=false;
-            message.innerHTML =
-            "Opérateurs différents — transfert simple uniquement, pas de frais de retrait";
+
+        let tousMemeOperateur = true;
+
+        for(let n of lignes){
+            let response = await fetch(
+                "<?= base_url('client/verifier-operateur') ?>",
+                {
+                    method:"POST",
+                    headers:{ "Content-Type": "application/x-www-form-urlencoded" },
+                    body: "numero=" + n
+                }
+            );
+            let data = await response.json();
+
+            if(!data.memeOperateur){
+                tousMemeOperateur = false;
+                break;
+            }
+        }
+
+        checkbox.disabled = true;
+        checkbox.checked = false;
+
+        if(tousMemeOperateur){
+            message.innerHTML = "Transfert multiple — tous même opérateur";
+        } else {
+            message.innerHTML = "Certains numéros sont d'un autre opérateur — transfert multiple inter-op non autorisé";
         }
     }
 
