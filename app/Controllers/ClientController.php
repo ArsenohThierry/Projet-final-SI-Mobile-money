@@ -120,6 +120,11 @@ class ClientController extends BaseController
         }
 
         $model = new Client();
+
+        if ($model->findByNumero($numero)) {
+            return redirect()->to('/auth/inscription-client?numero=' . $numero)->with('error', 'Ce numéro est déjà utilisé');
+        }
+
         $model->inscrire($nom, $numero);
 
         $client = $model->findByNumero($numero);

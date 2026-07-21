@@ -308,7 +308,7 @@ class Transaction extends Model
             ')
             ->join('transaction_mm t', 't.id = m.id_transaction')
             ->join('type_operation ty', 'ty.id = t.id_type_operation')
-            ->join('mouvement cm', 'cm.id_transaction = m.id_transaction AND cm.id != m.id')
+            ->join('mouvement cm', 'cm.id_transaction = m.id_transaction AND cm.id != m.id','left')
             ->join('client cc', 'cc.id = cm.id_client', 'left')
             ->join('prefixe pf', 'SUBSTR(cm.numero, 1, 3) = pf.prefixe', 'left')
             ->join('operateur o', 'o.id = pf.id_operateur', 'left')

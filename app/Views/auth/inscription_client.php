@@ -12,8 +12,8 @@
             <div class="auth-title">Inscription Client</div>
             <div class="auth-subtitle">Numéro : <?= esc($numero ?? '') ?></div>
 
-            <?php if (!empty($error ?? null)): ?>
-                <div class="alert alert-error"><?= esc($error) ?></div>
+            <?php if (session()->getFlashdata('error')): ?>
+                <div class="alert alert-error"><?= esc(session()->getFlashdata('error')) ?></div>
             <?php endif; ?>
 
             <form method="POST" action="/client/inscription">
